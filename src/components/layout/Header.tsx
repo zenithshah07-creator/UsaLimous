@@ -29,28 +29,28 @@ export default function Header() {
 
   return (
     <header className={`fixed w-full z-[1000] transition-all duration-300 ${scrolled ? 'bg-primary-dark shadow-medium border-b border-gray-dark py-2' : 'bg-primary-dark/95 backdrop-blur-sm border-b border-transparent h-16'}`}>
-      <div className="container mx-auto px-4 md:px-10 flex items-center justify-between h-[56px]">
+      <div className="container mx-auto px-4 lg:px-6 xl:px-10 flex items-center justify-between h-[56px]">
         
         {/* Logo */}
-        <Link href="/" className="group relative z-10 flex items-center gap-2">
+        <Link href="/" className="group relative z-10 flex items-center gap-2 shrink-0">
           {/* A simple luxury emblem */}
-          <div className="w-8 h-8 rounded-full border-2 border-gold flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-gold flex items-center justify-center shrink-0">
             <span className="font-playfair text-gold font-bold text-sm">UL</span>
           </div>
-          <span className="font-playfair text-2xl font-bold text-gold group-hover:text-gold-light transition-colors drop-shadow-[0_0_8px_rgba(212,175,55,0.2)]">
+          <span className="font-playfair text-xl xl:text-2xl font-bold text-gold group-hover:text-gold-light transition-colors drop-shadow-[0_0_8px_rgba(212,175,55,0.2)]">
             USA LIMOS
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center lg:space-x-4 xl:space-x-8">
           {navItems.map((item) => {
             const isActive = pathname === item.path || (pathname.startsWith(item.path) && item.path !== '/');
             return (
               <Link 
                 key={item.name} 
                 href={item.path}
-                className={`text-sm font-medium font-dm transition-colors relative group py-2 ${isActive ? 'text-gold' : 'text-white hover:text-gold-light'}`}
+                className={`text-sm lg:text-[13px] xl:text-sm font-medium font-dm transition-colors relative group py-2 whitespace-nowrap ${isActive ? 'text-gold' : 'text-white hover:text-gold-light'}`}
               >
                 {item.name}
                 <span className={`absolute bottom-0 left-0 h-[2px] bg-gold transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
@@ -60,14 +60,14 @@ export default function Header() {
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center lg:space-x-3 xl:space-x-6 shrink-0">
           <a href="tel:+18005550199" className="text-white hover:text-gold transition-colors flex items-center gap-2 font-dm text-sm font-medium">
-            <div className="w-8 h-8 rounded-full bg-gray-charcoal flex items-center justify-center text-gold">
+            <div className="w-8 h-8 rounded-full bg-gray-charcoal flex items-center justify-center text-gold shrink-0">
               <FiPhone size={14} />
             </div>
-            <span>800-555-0199</span>
+            <span className="hidden xl:inline">800-555-0199</span>
           </a>
-          <Button variant="primary" className="!py-2.5 !px-6 text-sm" onClick={() => window.location.href='/booking'}>Book Now</Button>
+          <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm" onClick={() => window.location.href='/booking'}>Book Now</Button>
         </div>
 
         {/* Mobile Toggle */}
