@@ -5,9 +5,9 @@ import { Card } from '@/components/ui/Card';
 import { FiAward, FiUsers, FiClock, FiShield, FiLinkedin, FiMail } from 'react-icons/fi';
 
 const team = [
-  { name: 'Robert Stirling', role: 'Founder & CEO', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80', bio: 'With 20 years in luxury transport, Robert sets our gold standard for service.' },
-  { name: 'Sarah Jenkins', role: 'Head of Operations', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80', bio: 'Sarah ensures our fleet is immaculate and every dispatch is perfectly timed.' },
-  { name: 'Michael Chen', role: 'Chief Concierge', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80', bio: 'Michael curates the bespoke amenities for our VVIP and corporate clients.' },
+  { name: 'Robert Stirling', role: 'Founder & CEO', image: '/Assets/Herosection1.jpg', bio: 'With 20 years in luxury transport, Robert sets our gold standard for service.' },
+  { name: 'Sarah Jenkins', role: 'Head of Operations', image: '/Assets/Herosection55.jpg', bio: 'Sarah ensures our fleet is immaculate and every dispatch is perfectly timed.' },
+  { name: 'Michael Chen', role: 'Chief Concierge', image: '/Assets/Herosection2.jpg', bio: 'Michael curates the bespoke amenities for our VVIP and corporate clients.' },
 ];
 
 export default function About() {
@@ -15,8 +15,14 @@ export default function About() {
     <div className="bg-primary-dark">
       {/* Hero */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden border-b border-gray-charcoal">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1563214545-c81bc638ef1f?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-30"></div>
-        <div className="absolute inset-0 bg-primary-dark/60"></div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000" 
+          style={{ 
+            backgroundImage: "url('/Assets/Corporate Travel.jpg')",
+            opacity: 0.4
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="relative z-10 text-center">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
@@ -66,7 +72,7 @@ export default function About() {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-gold/10 transform translate-x-4 translate-y-4 rounded-lg"></div>
-                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?auto=format&fit=crop&w=1000&q=80" alt="Luxury Fleet" className="rounded-lg relative z-10 shadow-heavy w-full" />
+                <img src="/Assets/Costumer trust.webp" alt="Luxury Fleet" className="rounded-lg relative z-10 shadow-heavy w-full" />
               </div>
             </motion.div>
           </div>

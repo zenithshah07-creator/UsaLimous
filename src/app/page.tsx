@@ -17,16 +17,16 @@ const TABS = ['One Way', 'Round Trip', 'By the Hour'];
 
 const BookingWidget = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const baseInputClass = "w-full h-14 bg-[#2d333b] border border-transparent focus:border-[#e02d2d]/30 rounded-2xl px-6 text-white placeholder-white/30 text-sm transition-all outline-none font-dm";
+  const baseInputClass = "w-full h-11 bg-[#2d333b] border border-transparent focus:border-[#e02d2d]/30 rounded-xl px-4 text-white placeholder-white/30 text-xs transition-all outline-none font-dm";
 
   return (
-    <div className="max-w-4xl mx-auto bg-[#1b2129]/95 backdrop-blur-xl rounded-[2rem] p-6 md:p-8 shadow-2xl border border-white/10 shadow-black/50 text-left">
-      <div className="flex flex-wrap gap-3 mb-8">
+    <div className="max-w-2xl mx-auto bg-[#1b2129]/95 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-2xl border border-white/10 shadow-black/50 text-left">
+      <div className="flex flex-wrap gap-2 mb-6">
         {TABS.map((tab, i) => (
           <button
             key={tab}
             onClick={() => setActiveTab(i)}
-            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all font-dm ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all font-dm ${
               activeTab === i
                 ? 'bg-[#e02d2d] text-white shadow-lg shadow-red-900/20'
                 : 'text-white/60 border border-white/10 hover:border-white/30 hover:bg-white/5'
@@ -38,7 +38,7 @@ const BookingWidget = () => {
       </div>
 
       {activeTab === 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
           <input className={baseInputClass} type="text" placeholder="Pickup — City, Airport, Hotel..." />
           <input className={baseInputClass} type="text" placeholder="Drop-off Location" />
           <input className={baseInputClass} type="date" style={{ colorScheme: 'dark' }} />
@@ -58,7 +58,7 @@ const BookingWidget = () => {
       )}
 
       {activeTab === 1 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
           <input className={baseInputClass} type="text" placeholder="Pickup — City, Airport, Hotel..." />
           <input className={baseInputClass} type="text" placeholder="Drop-off Location" />
           <input className={baseInputClass} type="text" placeholder="Departure Date" />
@@ -77,7 +77,7 @@ const BookingWidget = () => {
       )}
 
       {activeTab === 2 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
           <input className={baseInputClass} type="text" placeholder="Pickup Location" />
           <input className={baseInputClass} type="date" style={{ colorScheme: 'dark' }} />
           <input className={baseInputClass} type="time" style={{ colorScheme: 'dark' }} />
@@ -94,10 +94,10 @@ const BookingWidget = () => {
         </div>
       )}
 
-      <button className="w-full h-14 bg-[#e02d2d] text-white font-bold rounded-2xl hover:bg-red-700 transition-all transform active:scale-[0.98] shadow-lg shadow-red-900/40 mt-2 flex items-center justify-center gap-2 group font-dm">
+      <button className="w-full h-12 bg-[#e02d2d] text-white font-bold rounded-xl hover:bg-red-700 transition-all transform active:scale-[0.98] shadow-lg shadow-red-900/40 mt-2 flex items-center justify-center gap-2 group font-dm text-sm">
         Search Available Rides <span className="transition-transform group-hover:translate-x-1">→</span>
       </button>
-      <p className="text-[10px] text-white/20 mt-4 font-medium tracking-wide font-dm text-center">
+      <p className="text-[9px] text-white/20 mt-3 font-medium tracking-wide font-dm text-center">
         SECURE BOOKING • PROFESSIONAL CHAUFFEURS • NO HIDDEN FEES
       </p>
     </div>
@@ -133,8 +133,8 @@ const StatCounter = ({ target, suffix, label }: { target: number, suffix: string
 
   return (
     <div className="text-center" ref={ref}>
-      <div className="text-3xl font-bold text-[#eab308] mb-1 font-dm">{value}</div>
-      <div className="text-xs uppercase tracking-widest text-white/40 font-semibold font-dm">{label}</div>
+      <div className="text-2xl font-bold text-[#eab308] mb-1 font-dm">{value}</div>
+      <div className="text-[10px] uppercase tracking-widest text-white/40 font-semibold font-dm">{label}</div>
     </div>
   );
 };
@@ -184,7 +184,7 @@ export default function Home() {
         key={currentImageIndex}
         src={HERO_IMAGES[currentImageIndex]}
         initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 0.5, scale: 1 }}
+        animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full object-cover"
@@ -193,37 +193,37 @@ export default function Home() {
     </AnimatePresence>
     
     {/* Cinematic Overlay */}
-    <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.85))]" />
+    <div className="absolute inset-0 bg-black/20" />
   </div>
 
   {/* Content */}
   <div className="relative z-10 w-full max-w-6xl mx-auto px-4 text-center">
 
     {/* Badge */}
-    <div className="inline-flex items-center gap-2 bg-[#d4af37]/10 backdrop-blur-md border border-[#d4af37]/30 text-[#d4af37] px-2 py-2 rounded-full text-xs font-semibold tracking-[0.25em] mb-6 uppercase">
+    <div className="inline-flex items-center gap-1.5 bg-[#d4af37]/10 backdrop-blur-md border border-[#d4af37]/30 text-[#d4af37] px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.2em] mb-6 uppercase">
       ✦ PREMIUM CHAUFFEUR SERVICE ✦
     </div>
 
     {/* Heading */}
-    <h1 className="font-playfair text-[40px] sm:text-[52px] md:text-[70px] lg:text-[78px] font-weight:200 text-white leading-[1.1] tracking-tight max-w-4xl mx-auto">
+    <h1 className="font-playfair text-[32px] sm:text-[42px] md:text-[56px] lg:text-[64px] font-weight:200 text-white leading-[1.1] tracking-tight max-w-3xl mx-auto">
       Ride in Style.
       <br />
       <span className="text-white/90">Arrive in Class.</span>
     </h1>
 
     {/* Subtext */}
-    <p className="font-dm text-base md:text-lg text-white/70 mt-6 max-w-2xl mx-auto leading-relaxed">
+    <p className="font-dm text-sm md:text-base text-white/70 mt-6 max-w-2xl mx-auto leading-relaxed">
       Professional limo service for airport transfers, corporate travel, and special events.
     </p>
 
     {/* Buttons */}
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
 
-      <button className="bg-[#e02d2d] text-white font-semibold px-8 py-3.5 rounded-full hover:bg-red-600 transition-all shadow-lg shadow-red-900/30">
+      <button className="bg-[#e02d2d] text-white font-semibold px-6 py-2.5 rounded-full hover:bg-red-600 transition-all shadow-lg shadow-red-900/30 text-sm">
         Book Your Ride
       </button>
 
-      <button className="border border-white/30 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-all backdrop-blur-sm">
+      <button className="border border-white/30 text-white font-semibold px-6 py-2.5 rounded-full hover:bg-white/10 transition-all backdrop-blur-sm text-sm">
         View Our Fleet
       </button>
 
@@ -295,7 +295,7 @@ export default function Home() {
               className="w-full lg:w-1/2"
             >
               <img 
-                src="https://images.unsplash.com/photo-1563214545-c81bc638ef1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                src="/Assets/Herosection4.jpg" 
                 alt="Chauffeur Service" 
                 className="w-full rounded-lg shadow-deep object-cover h-[500px]"
               />
@@ -454,7 +454,7 @@ export default function Home() {
 
       {/* 7. CTA SECTION */}
       <section className="py-24 relative overflow-hidden bg-primary-dark border-y border-gold/20">
-        <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3)', backgroundSize: 'cover', backgroundAttachment: 'fixed' }}></div>
+        <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: "url('/Assets/Herosection2.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed' }}></div>
         <div className="container relative z-10 mx-auto px-4 text-center flex flex-col items-center">
           <motion.h2 
             initial={{ opacity: 0, scale: 0.9 }}

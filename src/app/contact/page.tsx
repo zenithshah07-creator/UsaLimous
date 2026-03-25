@@ -138,7 +138,7 @@ export default function Contact() {
 
               <div className="bg-gray-charcoal mt-8 p-1 border border-gray-dark rounded-lg overflow-hidden h-64 relative group">
                 {/* Mock Google Map Embed */}
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 transition-opacity duration-500 group-hover:opacity-70"></div>
+                <div className="absolute inset-0 bg-[url('/Assets/Herosection2.jpg')] bg-cover bg-center opacity-40 transition-opacity duration-500 group-hover:opacity-70"></div>
                 <div className="absolute inset-0 bg-primary-dark/50 pointer-events-none"></div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="bg-primary-dark border border-gold px-6 py-4 rounded-lg shadow-deep flex flex-col items-center">

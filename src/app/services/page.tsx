@@ -15,7 +15,7 @@ export default function Services() {
     <div className="bg-primary-dark">
       {/* Hero */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden border-b border-gray-charcoal">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1563214545-c81bc638ef1f?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('/Assets/Herosection1.jpg')] bg-cover bg-center opacity-30"></div>
         <div className="absolute inset-0 bg-primary-dark/60"></div>
         <div className="relative z-10 text-center">
           <motion.h1 

@@ -101,7 +101,7 @@ export default function BlogPost() {
 
               {/* Author Bio */}
               <div className="bg-gray-charcoal p-8 rounded-lg border border-gray-dark flex gap-6 items-center">
-                <img src="https://i.pravatar.cc/150?u=sarah" alt={activePost.author} className="w-20 h-20 rounded-full object-cover border-2 border-gold" />
+                <img src="/Assets/Herosection55.jpg" alt={activePost.author} className="w-20 h-20 rounded-full object-cover border-2 border-gold" />
                 <div>
                   <h4 className="font-cormorant text-2xl text-gold mb-1">{activePost.author}</h4>
                   <p className="font-dm text-white/50 text-sm mb-2">Senior Concierge Editor</p>

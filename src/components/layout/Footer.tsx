@@ -103,7 +103,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="pt-8 border-t border-gray-charcoal flex flex-col md:flex-row items-center justify-between">
-          <p className="text-white/50 font-dm text-sm mb-4 md:mb-0">
+          <p className="text-white/50 font-dm text-sm mb-4 md:mb-0" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} USA Limos Service. All rights reserved.
           </p>
           <div className="flex space-x-6">

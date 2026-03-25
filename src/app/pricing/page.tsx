@@ -42,7 +42,12 @@ export default function Pricing() {
   return (
     <div className="bg-primary-dark">
       {/* Hero */}
-      <section className="relative pt-32 pb-20 border-b border-gray-charcoal">
+      <section className="relative pt-32 pb-20 border-b border-gray-charcoal overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30" 
+          style={{ backgroundImage: "url('/Assets/Pricing.avif')" }}
+        ></div>
+        <div className="absolute inset-0 bg-primary-dark/60"></div>
         <div className="container mx-auto px-4 lg:px-10 text-center relative z-10">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
@@ -64,7 +69,7 @@ export default function Pricing() {
 
       {/* Pricing Cards */}
       <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?auto=format&fit=crop&q=80')] opacity-5 bg-cover bg-center bg-fixed"></div>
+        <div className="absolute inset-0 bg-[url('/Assets/Pricing.avif')] opacity-5 bg-cover bg-center bg-fixed"></div>
         <div className="container relative mx-auto px-4 lg:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {pricingPackages.map((pkg, i) => (
