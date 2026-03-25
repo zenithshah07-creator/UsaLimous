@@ -28,7 +28,7 @@ const BookingWidget = () => {
             onClick={() => setActiveTab(i)}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all font-dm ${
               activeTab === i
-                ? 'bg-[#e02d2d] text-white shadow-lg shadow-red-900/20'
+                ? 'bg-gold text-primary-dark shadow-lg shadow-gold/20'
                 : 'text-white/60 border border-white/10 hover:border-white/30 hover:bg-white/5'
             }`}
           >
@@ -94,7 +94,7 @@ const BookingWidget = () => {
         </div>
       )}
 
-      <button className="w-full h-12 bg-[#e02d2d] text-white font-bold rounded-xl hover:bg-red-700 transition-all transform active:scale-[0.98] shadow-lg shadow-red-900/40 mt-2 flex items-center justify-center gap-2 group font-dm text-sm">
+      <button className="w-full h-12 bg-gold text-primary-dark font-bold rounded-xl hover:bg-gold-light transition-all transform active:scale-[0.98] shadow-lg shadow-gold/40 mt-2 flex items-center justify-center gap-2 group font-dm text-sm">
         Search Available Rides <span className="transition-transform group-hover:translate-x-1">→</span>
       </button>
       <p className="text-[9px] text-white/20 mt-3 font-medium tracking-wide font-dm text-center">
@@ -219,7 +219,7 @@ export default function Home() {
     {/* Buttons */}
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
 
-      <button className="bg-[#e02d2d] text-white font-semibold px-6 py-2.5 rounded-full hover:bg-red-600 transition-all shadow-lg shadow-red-900/30 text-sm">
+      <button className="bg-gold text-primary-dark font-semibold px-6 py-2.5 rounded-full hover:bg-gold-light transition-all shadow-lg shadow-gold/30 text-sm">
         Book Your Ride
       </button>
 
