@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { FleetCard } from '@/components/ui/FleetCard';
 import { services, fleet, testimonials } from '@/data/mockData';
 import { FiCheckCircle, FiStar } from 'react-icons/fi';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -205,15 +206,14 @@ export default function Home() {
     </div>
 
     {/* Heading */}
-    <h1 className="font-playfair text-[32px] sm:text-[42px] md:text-[56px] lg:text-[64px] font-weight:200 text-white leading-[1.1] tracking-tight max-w-3xl mx-auto">
-      Ride in Style.
-      <br />
-      <span className="text-white/90">Arrive in Class.</span>
+    <h1 className="font-playfair text-[38px] sm:text-[48px] md:text-[62px] lg:text-[72px] font-bold text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-8 animate-fade-in">
+      Luxury Chauffeur & Premium <br />
+      Limo Experience in <span className="text-gold">USA</span>
     </h1>
 
     {/* Subtext */}
-    <p className="font-dm text-sm md:text-base text-white/70 mt-6 max-w-2xl mx-auto leading-relaxed">
-      Professional limo service for airport transfers, corporate travel, and special events.
+    <p className="font-dm text-base md:text-lg text-white/70 max-w-2xl mx-auto leading-loose animate-slide-up">
+      Experience the pinnacle of sophisticated travel. From airport transfers to corporate events, we provide unparalleled luxury on every mile.
     </p>
 
     {/* Buttons */}
@@ -245,8 +245,45 @@ export default function Home() {
   </div>
 </section>
 
-      {/* 2. FEATURED SERVICES */}
-      <section className="py-24 bg-primary-dark">
+      {/* 2. WHY CHOOSE US - UPGRADED */}
+      <section className="py-32 bg-primary-dark relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px]"></div>
+        <div className="container mx-auto px-4 lg:px-10">
+          <div className="text-center mb-20">
+            <h2 className="font-playfair text-4xl md:text-6xl text-gold mb-4">Why Choose Us</h2>
+            <div className="w-24 h-[1px] bg-gold mx-auto mb-6"></div>
+            <p className="font-dm text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+              We define luxury not just by our vehicles, but by the excellence of our service and attention to every detail.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { title: "24/7 Concierge Support", desc: "Our dedicated support team is available around the clock to assist with your reservations and special requests.", icon: <FiCheckCircle className="text-gold" size={32} /> },
+              { title: "Professional Drivers", desc: "Our chauffeurs are highly trained, discreet, and committed to providing a safe and punctual journey every time.", icon: <FiCheckCircle className="text-gold" size={32} /> },
+              { title: "Meticulous Fleet", desc: "Every vehicle in our collection is maintained to the highest standards of safety, cleanliness, and comfort.", icon: <FiCheckCircle className="text-gold" size={32} /> }
+            ].map((feature, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="text-center group"
+              >
+                <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold group-hover:text-primary-dark transition-colors duration-500 text-gold">
+                  {feature.icon}
+                </div>
+                <h3 className="font-playfair text-2xl text-white mb-4">{feature.title}</h3>
+                <p className="font-dm text-white/60 leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FEATURED SERVICES */}
+      <section className="py-32 bg-gray-charcoal/50">
         <div className="container mx-auto px-4 lg:px-10">
           <motion.div 
             initial="hidden"
@@ -372,30 +409,7 @@ export default function Home() {
             >
               {fleet.map((vehicle) => (
                 <SwiperSlide key={vehicle.id}>
-                  <Card variant="dark" hoverEffect className="p-0 overflow-hidden h-full flex flex-col group my-4 mx-2">
-                    <div className="h-56 overflow-hidden relative">
-                      <div className="absolute inset-0 bg-primary-dark/20 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
-                      <img 
-                        src={vehicle.image} 
-                        alt={vehicle.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    </div>
-                    <div className="p-6 flex-grow flex flex-col">
-                      <h3 className="font-cormorant text-2xl font-bold text-gold mb-1">{vehicle.name}</h3>
-                      <span className="inline-block bg-[rgba(212,175,55,0.1)] text-gold border border-gold px-2 py-1 text-xs font-dm rounded mb-4 w-max">
-                        {vehicle.category}
-                      </span>
-                      <ul className="mb-6 space-y-2 font-dm text-sm text-white/70 flex-grow">
-                        <li>• Seating: {vehicle.seating} Passengers</li>
-                        <li>• Includes: {vehicle.features.slice(0, 2).join(', ')}</li>
-                      </ul>
-                      <div className="flex items-center justify-between mt-auto">
-                        <span className="font-dm text-lg text-gold font-semibold">{vehicle.priceHourly} / hr</span>
-                        <Button variant="secondary" className="!py-2 !px-4 text-sm" onClick={() => window.location.href=`/fleet#${vehicle.id}`}>Details</Button>
-                      </div>
-                    </div>
-                  </Card>
+                  <FleetCard vehicle={vehicle} />
                 </SwiperSlide>
               ))}
             </Swiper>

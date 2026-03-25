@@ -61,13 +61,20 @@ export default function Header() {
 
         {/* Action Buttons */}
         <div className="hidden md:flex items-center lg:space-x-3 xl:space-x-6 shrink-0">
+          {/* Language Switcher */}
+          <div className="flex items-center gap-2 mr-2 bg-gray-charcoal/50 px-3 py-1.5 rounded-full border border-white/5">
+            <button className="text-[10px] font-bold text-gold hover:text-white transition-colors cursor-pointer">EN</button>
+            <div className="w-[1px] h-3 bg-white/10"></div>
+            <button className="text-[10px] font-bold text-white/40 hover:text-white transition-colors cursor-pointer">ES</button>
+          </div>
+
           <a href="tel:+18005550199" className="text-white hover:text-gold transition-colors flex items-center gap-2 font-dm text-sm font-medium">
             <div className="w-8 h-8 rounded-full bg-gray-charcoal flex items-center justify-center text-gold shrink-0">
               <FiPhone size={14} />
             </div>
             <span className="hidden xl:inline">800-555-0199</span>
           </a>
-          <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm" onClick={() => window.location.href='/booking'}>Book Now</Button>
+          <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm shadow-gold/20" onClick={() => window.location.href='/booking'}>Book Now</Button>
         </div>
 
         {/* Mobile Toggle */}
