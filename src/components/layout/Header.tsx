@@ -3,23 +3,25 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { FiMenu, FiX, FiPhone } from 'react-icons/fi';
+import { FiMenu, FiX, FiPhone, FiGlobe } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Services', path: '/services' },
-  { name: 'Fleet', path: '/fleet' },
-  { name: 'Pricing', path: '/pricing' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Contact', path: '/contact' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname() || '/';
+  const { locale, setLocale, t } = useLanguage();
+
+  const navItems = [
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.about'), path: '/about' },
+    { name: t('nav.services'), path: '/services' },
+    { name: t('nav.fleet'), path: '/fleet' },
+    { name: t('nav.pricing'), path: '/pricing' },
+    { name: t('nav.blog'), path: '/blog' },
+    { name: t('nav.contact'), path: '/contact' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -27,13 +29,16 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleLanguage = () => {
+    setLocale(locale === 'en' ? 'es' : 'en');
+  };
+
   return (
     <header className={`fixed w-full z-[1000] transition-all duration-300 ${scrolled ? 'bg-primary-dark shadow-medium border-b border-gray-dark py-2' : 'bg-primary-dark/95 backdrop-blur-sm border-b border-transparent h-16'}`}>
       <div className="container mx-auto px-4 lg:px-6 xl:px-10 flex items-center justify-between h-[56px]">
         
         {/* Logo */}
         <Link href="/" className="group relative z-10 flex items-center gap-2 shrink-0">
-          {/* A simple luxury emblem */}
           <div className="w-8 h-8 rounded-full border-2 border-gold flex items-center justify-center shrink-0">
             <span className="font-playfair text-gold font-bold text-sm">UL</span>
           </div>
@@ -60,31 +65,52 @@ export default function Header() {
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden md:flex items-center lg:space-x-3 xl:space-x-6 shrink-0">
-          {/* Language Switcher */}
-          <div className="flex items-center gap-2 mr-2 bg-gray-charcoal/50 px-3 py-1.5 rounded-full border border-white/5">
-            <button className="text-[10px] font-bold text-gold hover:text-white transition-colors cursor-pointer">EN</button>
-            <div className="w-[1px] h-3 bg-white/10"></div>
-            <button className="text-[10px] font-bold text-white/40 hover:text-white transition-colors cursor-pointer">ES</button>
-          </div>
+        <div className="hidden md:flex items-center lg:space-x-3 xl:space-x-5 shrink-0">
+          <button 
+            onClick={toggleLanguage}
+            className="flex items-center gap-2 text-white hover:text-gold transition-colors font-dm text-sm font-medium px-3 py-2 rounded-lg hover:bg-white/5"
+            aria-label="Toggle language"
+          >
+            <FiGlobe size={16} className="text-gold" />
+            <span className="uppercase">{locale}</span>
+          </button>
 
-          <a href="tel:+18005550199" className="text-white hover:text-gold transition-colors flex items-center gap-2 font-dm text-sm font-medium">
-            <div className="w-8 h-8 rounded-full bg-gray-charcoal flex items-center justify-center text-gold shrink-0">
-              <FiPhone size={14} />
+          <a href="tel:+18005550199" className="flex items-center gap-3 font-dm text-sm font-medium group">
+            {/* Animated call button */}
+            <div className="relative flex items-center justify-center w-10 h-10 shrink-0">
+              {/* Sonar ring 1 — gold */}
+              <span className="call-ring-1 absolute inset-0 rounded-full border-2 border-[#D4AF37]/70" />
+              {/* Sonar ring 2 — gold, delayed */}
+              <span className="call-ring-2 absolute inset-0 rounded-full border-2 border-[#D4AF37]/45" />
+              {/* Gold glowing circle */}
+              <span className="absolute inset-0 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/60 shadow-[0_0_12px_3px_rgba(212,175,55,0.35)]" />
+              {/* Phone icon wiggling */}
+              <span className="phone-wiggle relative z-10 text-[#D4AF37]">
+                <FiPhone size={15} />
+              </span>
             </div>
-            <span className="hidden xl:inline">800-555-0199</span>
+            <span className="hidden xl:inline text-white group-hover:text-gold transition-colors">800-555-0199</span>
           </a>
-          <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm shadow-gold/20" onClick={() => window.location.href='/booking'}>Book Now</Button>
+          <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm" onClick={() => window.location.href='/booking'}>{t('nav.bookNow')}</Button>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="lg:hidden text-white hover:text-gold z-50 p-2"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-        </button>
+        <div className="flex items-center gap-4 lg:hidden">
+          <button 
+            onClick={toggleLanguage}
+            className="text-white hover:text-gold p-2"
+            aria-label="Toggle language"
+          >
+            <FiGlobe size={20} className="text-gold" />
+          </button>
+          <button 
+            className="text-white hover:text-gold z-50 p-2"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+          </button>
+        </div>
 
       </div>
 
@@ -114,7 +140,7 @@ export default function Header() {
                   <FiPhone className="mr-2" /> 800-555-0199
                 </Button>
                 <Button variant="primary" className="w-full justify-center" onClick={() => { setIsOpen(false); window.location.href='/booking'; }}>
-                  Book Now
+                  {t('nav.bookNow')}
                 </Button>
               </div>
             </div>

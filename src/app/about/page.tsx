@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { FiAward, FiUsers, FiClock, FiShield, FiLinkedin, FiMail } from 'react-icons/fi';
+import PageHero from '@/components/ui/PageHero';
 
 const team = [
   { name: 'Robert Stirling', role: 'Founder & CEO', image: '/Assets/Herosection1.jpg', bio: 'With 20 years in luxury transport, Robert sets our gold standard for service.' },
@@ -14,34 +15,12 @@ export default function About() {
   return (
     <div className="bg-primary-dark">
       {/* Hero */}
-      <section className="relative h-[400px] flex items-center justify-center overflow-hidden border-b border-gray-charcoal">
-        <div 
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000" 
-          style={{ 
-            backgroundImage: "url('/Assets/Corporate Travel.jpg')",
-            opacity: 0.4
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-playfair text-5xl md:text-6xl text-gold mb-4"
-          >
-            About USA Limos
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="font-dm text-white/70 uppercase tracking-widest text-sm"
-          >
-            Home / About
-          </motion.p>
-        </div>
-      </section>
+      {/* Hero */}
+      <PageHero
+        title="About USA Limos"
+        breadcrumb="Home / About"
+        image="/Assets/Corporate Travel.jpg"
+      />
 
       {/* Story */}
       <section className="py-24">

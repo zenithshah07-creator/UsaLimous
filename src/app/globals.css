@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -19,7 +19,6 @@
   --font-playfair: 'Playfair Display', serif;
   --font-cormorant: 'Cormorant Garamond', serif;
   --font-dm: 'DM Sans', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
 }
 
 :root {
@@ -41,6 +40,8 @@ body {
 .shadow-medium { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
 .shadow-heavy { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25); }
 .shadow-deep { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+.shadow-glow { box-shadow: 0 0 15px 2px rgba(212, 175, 55, 0.3); }
+.shadow-glow-strong { box-shadow: 0 0 25px 5px rgba(212, 175, 55, 0.4); }
 
 /* Animation Utility Classes */
 @layer utilities {
@@ -65,17 +66,8 @@ body {
 
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); opacity: 1; }
-  50% { box-shadow: 0 0 20px 10px rgba(212, 175, 55, 0.2); opacity: 0.8; }
+  50% { box-shadow: 0 0 20px 10px rgba(212, 175, 55, 0); opacity: 0.6; }
   100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); opacity: 1; }
-}
-
-.glow-gold {
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-  transition: all 0.3s ease;
-}
-
-.glow-gold:hover {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
 }
 
 @keyframes fadeIn {
@@ -86,4 +78,33 @@ body {
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Call Button Animation ── */
+@keyframes callRing1 {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes callRing2 {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(2.9); opacity: 0; }
+}
+@keyframes phoneWiggle {
+  0%,100% { transform: rotate(0deg); }
+  15%     { transform: rotate(-18deg); }
+  30%     { transform: rotate(16deg); }
+  45%     { transform: rotate(-10deg); }
+  60%     { transform: rotate(8deg); }
+  75%     { transform: rotate(-4deg); }
+}
+
+.call-ring-1 {
+  animation: callRing1 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+.call-ring-2 {
+  animation: callRing2 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s infinite;
+}
+.phone-wiggle {
+  animation: phoneWiggle 1.8s ease-in-out infinite;
+  display: inline-block;
 }

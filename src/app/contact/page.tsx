@@ -6,6 +6,7 @@ import { TextArea } from '@/components/ui/TextArea';
 import { Button } from '@/components/ui/Button';
 import { useForm } from 'react-hook-form';
 import { FiCheckCircle, FiPhone, FiMail, FiMessageCircle, FiMapPin } from 'react-icons/fi';
+import PageHero from '@/components/ui/PageHero';
 
 export default function Contact() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -21,25 +22,12 @@ export default function Contact() {
   return (
     <div className="bg-primary-dark">
       {/* Hero */}
-      <section className="relative pt-32 pb-20 border-b border-gray-charcoal">
-        <div className="container mx-auto px-4 lg:px-10 text-center relative z-10">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-playfair text-5xl md:text-6xl text-gold mb-6"
-          >
-            Contact Us
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="font-dm text-white/70 max-w-2xl mx-auto text-lg"
-          >
-            Experience immediate, white-glove assistance. Our concierge is available 24/7 to accommodate your requests.
-          </motion.p>
-        </div>
-      </section>
+      <PageHero
+        title="Contact Us"
+        subtitle="Experience immediate, white-glove assistance. Our concierge is available 24/7 to accommodate your requests."
+        image="/Assets/Herosection2.jpg"
+        breadcrumb="Home / Contact"
+      />
 
       {/* Main Content */}
       <section className="py-24">

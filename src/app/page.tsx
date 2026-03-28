@@ -4,12 +4,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { FleetCard } from '@/components/ui/FleetCard';
 import { services, fleet, testimonials } from '@/data/mockData';
-import { FiCheckCircle, FiStar } from 'react-icons/fi';
+import { FiCheckCircle, FiStar, FiClock, FiUsers, FiAward } from 'react-icons/fi';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -18,7 +17,7 @@ const TABS = ['One Way', 'Round Trip', 'By the Hour'];
 
 const BookingWidget = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const baseInputClass = "w-full h-11 bg-[#2d333b] border border-transparent focus:border-[#e02d2d]/30 rounded-xl px-4 text-white placeholder-white/30 text-xs transition-all outline-none font-dm";
+  const baseInputClass = "w-full h-11 bg-[#2d333b] border border-transparent focus:border-[#d4af37]/30 rounded-xl px-4 text-white placeholder-white/30 text-xs transition-all outline-none font-dm";
 
   return (
     <div className="max-w-2xl mx-auto bg-[#1b2129]/95 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-2xl border border-white/10 shadow-black/50 text-left">
@@ -150,6 +149,7 @@ const HERO_IMAGES = [
 
 export default function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -174,126 +174,101 @@ export default function Home() {
   };
 
   return (
-    <>
-  {/* 1. HERO SECTION */}
-  <section className="relative min-h-screen flex items-center justify-center pt-8 pb-16 overflow-hidden bg-[#0c1015]">
+    <div className="bg-primary-dark">
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-screen flex items-center justify-center pt-8 pb-16 overflow-hidden bg-[#0c1015]">
+        {/* Background images — CSS crossfade, always visible */}
+        <div className="absolute inset-0 z-0">
+          {HERO_IMAGES.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt={`Luxury background ${i + 1}`}
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
+              style={{ opacity: i === currentImageIndex ? 1 : 0 }}
+            />
+          ))}
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
 
-  {/* Background Slider */}
-  <div className="absolute inset-0 z-0">
-    <AnimatePresence mode="wait">
-      <motion.img
-        key={currentImageIndex}
-        src={HERO_IMAGES[currentImageIndex]}
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
-        className="absolute inset-0 w-full h-full object-cover"
-        alt={`Luxury Car Background ${currentImageIndex + 1}`}
-      />
-    </AnimatePresence>
-    
-    {/* Cinematic Overlay */}
-    <div className="absolute inset-0 bg-black/20" />
-  </div>
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-1.5 bg-gold/15 backdrop-blur-md border border-gold/30 text-gold px-5 py-2 rounded-full text-[10px] md:text-[11px] font-bold tracking-[0.3em] mb-8 uppercase"
+          >
+            {t('hero.badge')}
+          </motion.div>
 
-  {/* Content */}
-  <div className="relative z-10 w-full max-w-6xl mx-auto px-4 text-center">
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.7 }}
+            className="font-playfair text-[40px] sm:text-[52px] md:text-[68px] lg:text-[76px] font-bold text-white leading-[1.08] tracking-tight mx-auto"
+          >
+            {(() => {
+              const title = t('hero.title');
+              const parts = title.split('USA');
+              return parts.length > 1 ? (
+                <>{parts[0]}<span className="text-gold italic">USA</span>{parts[1]}</>
+              ) : title;
+            })()}
+          </motion.h1>
 
-    {/* Badge */}
-    <div className="inline-flex items-center gap-1.5 bg-[#d4af37]/10 backdrop-blur-md border border-[#d4af37]/30 text-[#d4af37] px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.2em] mb-6 uppercase">
-      ✦ PREMIUM CHAUFFEUR SERVICE ✦
-    </div>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35, duration: 0.7 }}
+            className="font-dm text-[15px] md:text-[17px] text-white/75 mt-7 max-w-xl mx-auto leading-relaxed"
+          >
+            {t('hero.subtitle')}
+          </motion.p>
 
-    {/* Heading */}
-    <h1 className="font-playfair text-[38px] sm:text-[48px] md:text-[62px] lg:text-[72px] font-bold text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-8 animate-fade-in">
-      Luxury Chauffeur & Premium <br />
-      Limo Experience in <span className="text-gold">USA</span>
-    </h1>
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55, duration: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-9"
+          >
+            <button className="bg-[#c9a227] text-black font-bold px-9 py-3.5 rounded-full hover:bg-[#e0b930] transition-all shadow-[0_4px_24px_rgba(201,162,39,0.35)] text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 font-dm">
+              {t('hero.bookRide')}
+            </button>
+            <button className="bg-white/10 border border-white/30 text-white font-bold px-9 py-3.5 rounded-full hover:bg-white/20 transition-all backdrop-blur-sm text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 font-dm">
+              {t('hero.viewFleet')}
+            </button>
+          </motion.div>
 
-    {/* Subtext */}
-    <p className="font-dm text-base md:text-lg text-white/70 max-w-2xl mx-auto leading-loose animate-slide-up">
-      Experience the pinnacle of sophisticated travel. From airport transfers to corporate events, we provide unparalleled luxury on every mile.
-    </p>
-
-    {/* Buttons */}
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-
-      <button className="bg-gold text-primary-dark font-semibold px-6 py-2.5 rounded-full hover:bg-gold-light transition-all shadow-lg shadow-gold/30 text-sm">
-        Book Your Ride
-      </button>
-
-      <button className="border border-white/30 text-white font-semibold px-6 py-2.5 rounded-full hover:bg-white/10 transition-all backdrop-blur-sm text-sm">
-        View Our Fleet
-      </button>
-
-    </div>
-
-    {/* Stats */}
-    <div className="flex flex-wrap justify-center gap-10 mt-12">
-      <StatCounter target={500} suffix="+" label="Happy Clients" />
-      <StatCounter target={50} suffix="+" label="Cities Covered" />
-      <StatCounter target={10} suffix="+" label="Years Experience" />
-      <StatCounter target={49} suffix="★" label="Rating" />
-    </div>
-
-    {/* Booking */}
-    <div className="mt-14">
-      <BookingWidget />
-    </div>
-
-  </div>
-</section>
-
-      {/* 2. WHY CHOOSE US - UPGRADED */}
-      <section className="py-32 bg-primary-dark relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px]"></div>
-        <div className="container mx-auto px-4 lg:px-10">
-          <div className="text-center mb-20">
-            <h2 className="font-playfair text-4xl md:text-6xl text-gold mb-4">Why Choose Us</h2>
-            <div className="w-24 h-[1px] bg-gold mx-auto mb-6"></div>
-            <p className="font-dm text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              We define luxury not just by our vehicles, but by the excellence of our service and attention to every detail.
-            </p>
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-10 md:gap-16 mt-14 lg:mt-20">
+            <StatCounter target={500} suffix="+" label="Happy Clients" />
+            <StatCounter target={50} suffix="+" label="Cities Covered" />
+            <StatCounter target={10} suffix="+" label="Years Experience" />
+            <StatCounter target={49} suffix="★" label="Rating" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              { title: "24/7 Concierge Support", desc: "Our dedicated support team is available around the clock to assist with your reservations and special requests.", icon: <FiCheckCircle className="text-gold" size={32} /> },
-              { title: "Professional Drivers", desc: "Our chauffeurs are highly trained, discreet, and committed to providing a safe and punctual journey every time.", icon: <FiCheckCircle className="text-gold" size={32} /> },
-              { title: "Meticulous Fleet", desc: "Every vehicle in our collection is maintained to the highest standards of safety, cleanliness, and comfort.", icon: <FiCheckCircle className="text-gold" size={32} /> }
-            ].map((feature, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="text-center group"
-              >
-                <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold group-hover:text-primary-dark transition-colors duration-500 text-gold">
-                  {feature.icon}
-                </div>
-                <h3 className="font-playfair text-2xl text-white mb-4">{feature.title}</h3>
-                <p className="font-dm text-white/60 leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
+          <div className="mt-14 hidden lg:block">
+            <BookingWidget />
           </div>
         </div>
       </section>
 
-      {/* 3. FEATURED SERVICES */}
-      <section className="py-32 bg-gray-charcoal/50">
+      {/* 2. FEATURED SERVICES */}
+      <section className="py-32 bg-primary-dark border-t border-white/5">
         <div className="container mx-auto px-4 lg:px-10">
           <motion.div 
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <motion.h2 variants={itemFadeUp} className="font-playfair text-4xl md:text-5xl text-gold mb-4">Our Premium Services</motion.h2>
-            <motion.p variants={itemFadeUp} className="font-dm text-gray-400 max-w-2xl mx-auto">Tailored transportation solutions designed to meet the highest standards of luxury and reliability.</motion.p>
+            <motion.h2 variants={itemFadeUp} className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">Our Premium Services</motion.h2>
+            <motion.p variants={itemFadeUp} className="font-dm text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">Tailored transportation solutions designed to meet the highest standards of luxury and reliability.</motion.p>
           </motion.div>
 
           <motion.div 
@@ -301,15 +276,15 @@ export default function Home() {
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {services.map((service) => (
               <motion.div key={service.id} variants={itemFadeUp}>
-                <Card variant="gold-accent-left" className="h-full flex flex-col group cursor-pointer" hoverEffect>
-                  <div className="text-4xl text-gold mb-4 group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
-                  <h3 className="font-cormorant text-2xl font-semibold text-gold mb-3">{service.name}</h3>
-                  <p className="font-dm text-white text-sm leading-relaxed mb-6 flex-grow">{service.description}</p>
-                  <Link href={`/services#${service.id}`} className="font-dm text-gold font-semibold text-sm group-hover:text-gold-light transition-colors inline-block relative overflow-hidden">
+                <Card variant="gold-accent-left" className="h-full flex flex-col group cursor-pointer p-8" hoverEffect>
+                  <div className="text-4xl text-gold mb-6 group-hover:scale-110 transition-transform duration-300 transform-gpu">{service.icon}</div>
+                  <h3 className="font-playfair text-2xl font-semibold text-white mb-4 group-hover:text-gold transition-colors">{service.name}</h3>
+                  <p className="font-dm text-white/50 text-sm leading-relaxed mb-8 flex-grow">{service.description}</p>
+                  <Link href={`/services#${service.id}`} className="font-dm text-gold font-semibold text-sm group-hover:text-gold-light transition-colors inline-block relative overflow-hidden w-max">
                     Learn More &rarr;
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-gold-light -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                   </Link>
@@ -320,59 +295,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. WHY CHOOSE US */}
-      <section className="py-24 bg-gray-charcoal">
+      {/* 3. WHY CHOOSE US */}
+      <section className="py-32 bg-gray-charcoal relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent"></div>
         <div className="container mx-auto px-4 lg:px-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          <div className="text-center mb-20">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="w-full lg:w-1/2"
+              className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6"
             >
-              <img 
-                src="/Assets/Herosection4.jpg" 
-                alt="Chauffeur Service" 
-                className="w-full rounded-lg shadow-deep object-cover h-[500px]"
-              />
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              {t('whyChooseUs.title')}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full lg:w-1/2"
+              transition={{ delay: 0.2 }}
+              className="font-dm text-white/60 max-w-2xl mx-auto text-lg"
             >
-              <h2 className="font-playfair text-4xl md:text-5xl text-gold mb-6">Experience the Difference</h2>
-              <p className="font-dm text-white/80 mb-8 leading-relaxed text-lg">
-                With over a decade of redefining luxury travel, we guarantee excellence in every mile. Our commitment to perfection makes us the preferred choice for discerning clients.
-              </p>
-              
-              <ul className="space-y-4 mb-10">
-                {['24/7 Professional Chauffeur Service', 'Meticulously Maintained Premium Fleet', 'Certified & Discreet Drivers', 'Competitive & Transparent Pricing'].map((item, i) => (
-                  <motion.li 
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + (i * 0.1) }}
-                    className="flex items-center text-white font-dm text-lg"
-                  >
-                    <FiCheckCircle className="text-gold mr-4 flex-shrink-0" size={24} />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
-              <Button onClick={() => window.location.href='/about'}>Read Our Story</Button>
-            </motion.div>
+              {t('whyChooseUs.subtitle')}
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: <FiClock size={32} />, title: t('whyChooseUs.support'), desc: t('whyChooseUs.supportDesc') },
+              { icon: <FiUsers size={32} />, title: t('whyChooseUs.drivers'), desc: t('whyChooseUs.driversDesc') },
+              { icon: <FiCheckCircle size={32} />, title: t('whyChooseUs.punctuality'), desc: t('whyChooseUs.punctualityDesc') },
+              { icon: <FiAward size={32} />, title: t('whyChooseUs.fleet'), desc: t('whyChooseUs.fleetDesc') }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-primary-dark/50 backdrop-blur-sm p-10 rounded-2xl border border-white/5 hover:border-gold/30 transition-all group hover:-translate-y-2 duration-500"
+              >
+                <div className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500 bg-gold/10 w-16 h-16 flex items-center justify-center rounded-full">
+                  {item.icon}
+                </div>
+                <h3 className="font-playfair text-2xl text-white mb-4 group-hover:text-gold transition-colors">{item.title}</h3>
+                <p className="font-dm text-white/50 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 5. FLEET PREVIEW */}
-      <section className="py-24 bg-primary-dark">
+      {/* 4. FLEET PREVIEW */}
+      <section className="py-32 bg-primary-dark">
         <div className="container mx-auto px-4 lg:px-10">
           <div className="flex justify-between items-end mb-16">
             <motion.div 
@@ -380,23 +354,23 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="font-playfair text-4xl md:text-5xl text-gold mb-4">Our Signature Fleet</h2>
-              <p className="font-dm text-gray-400">Step into unparalleled comfort and prestige.</p>
+              <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">{t('fleet.title')}</h2>
+              <p className="font-dm text-gray-400 text-lg">{t('fleet.subtitle')}</p>
             </motion.div>
-            <Link href="/fleet" className="hidden md:inline-block text-gold hover:text-gold-light font-dm font-semibold transition-colors border-b border-gold-light pb-1">
+            <Link href="/fleet" className="hidden md:inline-block text-gold hover:text-gold-light font-dm font-semibold transition-colors border-b border-gold-light pb-1 text-lg">
               View All Vehicles
             </Link>
           </div>
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
             <Swiper
               modules={[Pagination, Navigation, Autoplay]}
-              spaceBetween={24}
+              spaceBetween={30}
               slidesPerView={1}
               breakpoints={{
                 768: { slidesPerView: 2 },
@@ -405,32 +379,64 @@ export default function Home() {
               pagination={{ clickable: true }}
               navigation
               autoplay={{ delay: 5000, disableOnInteraction: false }}
-              className="pb-16 fleet-swiper"
+              className="pb-20 fleet-swiper"
             >
               {fleet.map((vehicle) => (
                 <SwiperSlide key={vehicle.id}>
-                  <FleetCard vehicle={vehicle} />
+                  <Card variant="dark" hoverEffect className="p-0 overflow-hidden h-full flex flex-col group border border-white/5 hover:border-gold/20 transition-all duration-500 rounded-2xl">
+                    <div className="h-64 overflow-hidden relative">
+                      <div className="absolute inset-0 bg-primary-dark/20 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
+                      <img 
+                        src={vehicle.image} 
+                        alt={vehicle.name} 
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      />
+                      <div className="absolute top-4 right-4 z-20">
+                         <span className="bg-gold text-primary-dark px-3 py-1 rounded-full text-xs font-bold shadow-glow">
+                           {vehicle.category}
+                         </span>
+                      </div>
+                    </div>
+                    <div className="p-8 flex-grow flex flex-col">
+                      <h3 className="font-playfair text-2xl font-bold text-white mb-2 group-hover:text-gold transition-colors">{vehicle.name}</h3>
+                      <div className="flex items-center gap-4 text-white/50 text-sm mb-6 font-dm">
+                        <span className="flex items-center gap-1.5"><FiUsers className="text-gold" /> {vehicle.seating} Guests</span>
+                      </div>
+                      <p className="text-white/40 text-sm mb-8 font-dm leading-relaxed">
+                        {vehicle.features.slice(0, 3).join(' • ')}
+                      </p>
+                      <div className="flex items-center justify-between mt-auto border-t border-white/5 pt-6">
+                        <div>
+                          <p className="text-[10px] text-white/30 uppercase tracking-widest font-bold mb-1">{t('fleet.price')}</p>
+                          <span className="font-dm text-xl text-gold font-bold">{vehicle.priceHourly}</span>
+                        </div>
+                        <Button variant="primary" className="!py-2.5 !px-6 text-sm shadow-glow" onClick={() => window.location.href=`/booking?vehicle=${vehicle.id}`}>
+                          {t('fleet.bookNow')}
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
                 </SwiperSlide>
               ))}
             </Swiper>
           </motion.div>
-          <div className="text-center mt-8 md:hidden">
-            <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="w-full">View All Vehicles</Button>
+          <div className="text-center mt-10 md:hidden">
+            <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="w-full h-14">View All Vehicles</Button>
           </div>
         </div>
       </section>
 
-      {/* 6. TESTIMONIALS */}
-      <section className="py-24 bg-gray-charcoal">
+      {/* 5. TESTIMONIALS */}
+      <section className="py-32 bg-gray-charcoal relative">
         <div className="container mx-auto px-4 lg:px-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-16"
+            className="mb-20"
           >
-            <h2 className="font-playfair text-4xl md:text-5xl text-gold mb-4">Client Testimonials</h2>
-            <p className="font-dm text-white/70">Don&apos;t just take our word for it—hear from our esteemed clientele.</p>
+            <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">Client Testimonials</h2>
+            <p className="font-dm text-white/60 text-lg max-w-2xl mx-auto">Don&apos;t just take our word for it—hear from our esteemed clientele.</p>
           </motion.div>
 
           <Swiper
@@ -443,20 +449,20 @@ export default function Home() {
             }}
             pagination={{ clickable: true }}
             autoplay={{ delay: 6000 }}
-            className="pb-16"
+            className="pb-20"
           >
             {testimonials.map((t) => (
               <SwiperSlide key={t.id}>
-                <Card variant="dark" className="p-8 text-left bg-primary-dark">
-                  <div className="flex text-gold mb-6">
+                <Card variant="dark" className="p-10 text-left bg-primary-dark border border-white/5 hover:border-gold/20 h-full transition-all duration-500 rounded-2xl">
+                  <div className="flex text-gold mb-8">
                     {[1,2,3,4,5].map((star) => <FiStar key={star} fill="currentColor" /> )}
                   </div>
-                  <p className="font-dm italic text-white/90 leading-relaxed mb-8">&quot;{t.text}&quot;</p>
-                  <div className="flex items-center gap-4">
-                    <img src={t.image} alt={t.name} className="w-12 h-12 rounded-full border border-gray-dark" />
+                  <p className="font-dm italic text-white/90 text-lg leading-relaxed mb-10">&quot;{t.text}&quot;</p>
+                  <div className="flex items-center gap-5 mt-auto">
+                    <img src={t.image} alt={t.name} className="w-14 h-14 rounded-full border-2 border-gold/20 p-0.5 object-cover" />
                     <div>
-                      <h4 className="font-cormorant text-xl font-bold text-gold">{t.name}</h4>
-                      <p className="font-dm text-xs text-gray-400">{t.title}</p>
+                      <h4 className="font-playfair text-xl font-bold text-white">{t.name}</h4>
+                      <p className="font-dm text-xs text-gold/60 uppercase tracking-widest">{t.title}</p>
                     </div>
                   </div>
                 </Card>
@@ -466,15 +472,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. CTA SECTION */}
-      <section className="py-24 relative overflow-hidden bg-primary-dark border-y border-gold/20">
-        <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: "url('/Assets/Herosection2.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed' }}></div>
+      {/* 6. CTA SECTION */}
+      <section className="py-40 relative overflow-hidden bg-primary-dark border-y border-gold/10">
+        <div className="absolute inset-0 z-0 opacity-5" style={{ backgroundImage: "url('/Assets/Herosection2.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed' }}></div>
         <div className="container relative z-10 mx-auto px-4 text-center flex flex-col items-center">
           <motion.h2 
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="font-playfair text-4xl md:text-5xl text-gold mb-6"
+            className="font-playfair text-4xl md:text-6xl text-gold mb-8"
           >
             Ready to Experience Luxury?
           </motion.h2>
@@ -483,7 +489,7 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-dm text-xl text-white mb-10"
+            className="font-dm text-xl text-white/70 mb-12 max-w-2xl"
           >
             Book your limo in 3 easy steps and elevate your journey.
           </motion.p>
@@ -492,15 +498,15 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 items-center"
+            className="flex flex-col sm:flex-row gap-8 items-center"
           >
-            <Button className="!px-12 !py-5 text-lg" onClick={() => window.location.href='/booking'}>Book Now</Button>
-            <div className="text-white/50 font-dm">
-              or <a href="tel:+18005550199" className="text-gold font-bold hover:underline ml-2">+1 800-555-0199</a>
+            <Button className="!px-16 !py-6 text-xl shadow-glow" onClick={() => window.location.href='/booking'}>Book Now</Button>
+            <div className="text-white/40 font-dm text-lg">
+              or <a href="tel:+18005550199" className="text-gold font-bold hover:underline ml-2 transition-all">+1 800-555-0199</a>
             </div>
           </motion.div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

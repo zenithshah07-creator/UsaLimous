@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { blogPosts } from '@/data/mockData';
 import { FiClock, FiCalendar, FiUser } from 'react-icons/fi';
+import PageHero from '@/components/ui/PageHero';
 
 export default function BlogListing() {
   const categories = ['Travel Tips', 'Corporate', 'Weddings', 'Fleet News', 'Luxury Lifestyle'];
@@ -13,30 +14,12 @@ export default function BlogListing() {
   return (
     <div className="bg-primary-dark min-h-screen">
       {/* Hero */}
-      <section className="relative pt-32 pb-20 border-b border-gray-charcoal overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30" 
-          style={{ backgroundImage: "url('/Assets/Blogging.avif')" }}
-        ></div>
-        <div className="absolute inset-0 bg-primary-dark/60"></div>
-        <div className="container mx-auto px-4 lg:px-10 text-center relative z-10">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-playfair text-5xl md:text-6xl text-gold mb-6"
-          >
-            Luxury Dispatch
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="font-dm text-white/70 max-w-2xl mx-auto text-lg"
-          >
-            Insights, travel tips, and news from the forefront of elite transportation.
-          </motion.p>
-        </div>
-      </section>
+      <PageHero
+        title="Luxury Dispatch"
+        subtitle="Insights, travel tips, and news from the forefront of elite transportation."
+        image="/Assets/Blogging.avif"
+        breadcrumb="Home / Blog"
+      />
 
       {/* Main Layout */}
       <section className="py-24">

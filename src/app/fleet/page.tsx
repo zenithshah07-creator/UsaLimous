@@ -3,128 +3,172 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fleet } from '@/data/mockData';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { useLanguage } from '@/context/LanguageContext';
+import { FiUsers, FiCheckCircle, FiStar, FiArrowRight } from 'react-icons/fi';
+import PageHero from '@/components/ui/PageHero';
 
 const categories = ['All', 'Luxury Sedan', 'Luxury SUV', 'Stretch Limousine', 'Party Bus'];
 
 export default function Fleet() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { t } = useLanguage();
 
   const filteredFleet = activeCategory === 'All' 
     ? fleet 
     : fleet.filter(v => v.category === activeCategory);
 
   return (
-    <div className="bg-primary-dark min-h-screen">
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 border-b border-gray-charcoal overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30" 
-          style={{ backgroundImage: "url('/Assets/Herosection1.jpg')" }}
-        ></div>
-        <div className="absolute inset-0 bg-primary-dark/60"></div>
-        <div className="container mx-auto px-4 lg:px-10 text-center relative z-10">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-playfair text-5xl md:text-6xl text-gold mb-6"
-          >
-            Our Premium Fleet
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="font-dm text-white/70 max-w-2xl mx-auto mb-12 text-lg"
-          >
-            Discover our meticulously maintained selection of world-class vehicles, each chosen for ultimate comfort, safety, and prestige.
-          </motion.p>
-          
-          {/* Filters */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2 rounded-full font-dm text-sm font-medium transition-all duration-300 border ${
-                  activeCategory === cat 
-                  ? 'bg-gold text-primary-dark border-gold shadow-[0_0_15px_rgba(212,175,55,0.3)]' 
-                  : 'bg-transparent text-white border-gray-dark hover:border-gold-light/50 hover:text-gold-light'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+    <div className="bg-primary-dark min-h-screen relative overflow-hidden">
+      {/* Dynamic Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-gold/5 to-transparent pointer-events-none"></div>
+      
+      {/* Hero Section */}
+      <PageHero
+        badge={t('nav.fleet')}
+        title={t('fleet.title')}
+        subtitle={t('fleet.subtitle')}
+        image="/Assets/Herosection1.jpg"
+      >
+        {/* Enhanced Category Filters */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-12 flex flex-wrap justify-center gap-4 bg-white/[0.03] backdrop-blur-md p-2 rounded-full border border-white/5 w-fit mx-auto"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-8 py-3 rounded-full font-dm text-xs font-bold uppercase tracking-widest transition-all duration-500 ${
+                activeCategory === cat 
+                ? 'bg-gold text-primary-dark shadow-glow scale-105' 
+                : 'text-white/40 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+      </PageHero>
 
-      {/* Grid */}
-      <section className="py-24">
+      {/* Fleet Grid */}
+      <section className="py-32 relative">
         <div className="container mx-auto px-4 lg:px-10">
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence>
-              {filteredFleet.map((vehicle) => (
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <AnimatePresence mode="popLayout">
+              {filteredFleet.map((vehicle, index) => (
                 <motion.div
                   key={vehicle.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group"
                 >
-                  <Card className="p-0 overflow-hidden h-full flex flex-col group border-gray-dark hover:border-gold transition-colors duration-300">
-                    <div className="relative h-64 overflow-hidden">
-                      <div className="absolute inset-0 bg-primary-dark/10 group-hover:bg-transparent transition-colors z-10"></div>
+                  <div className="relative bg-[#161b22] rounded-[40px] overflow-hidden border border-white/5 shadow-deep transition-all duration-700 hover:border-gold/30 hover:shadow-glow-strong">
+                    {/* Image Area */}
+                    <div className="relative h-[300px] overflow-hidden">
                       <img 
                         src={vehicle.image} 
                         alt={vehicle.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                       />
-                      <div className="absolute top-4 right-4 z-20 bg-primary-dark/80 backdrop-blur-sm border border-gold/50 text-gold text-xs font-dm font-bold px-3 py-1 rounded">
-                        {vehicle.category}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent"></div>
+                      
+                      {/* Badge */}
+                      <div className="absolute top-6 right-6">
+                        <span className="bg-primary-dark/80 backdrop-blur-md border border-gold/30 text-gold text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-widest">
+                          {vehicle.category}
+                        </span>
                       </div>
                     </div>
                     
-                    <div className="p-8 flex flex-col flex-grow bg-gray-charcoal">
-                      <h2 className="font-cormorant text-2xl md:text-3xl font-bold text-gold mb-6">{vehicle.name}</h2>
+                    {/* Content Area */}
+                    <div className="p-10 pt-0 relative z-10">
+                      <div className="flex justify-between items-start mb-6">
+                        <h2 className="font-playfair text-3xl text-white group-hover:text-gold transition-colors duration-500">{vehicle.name}</h2>
+                        <div className="flex items-center gap-1 text-gold">
+                           <FiStar size={14} fill="currentColor" />
+                           <span className="text-xs font-dm font-bold mt-0.5">5.0</span>
+                        </div>
+                      </div>
                       
-                      <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm font-dm mb-8 flex-grow">
-                        <div className="text-white/80">
-                          <span className="block text-gray-500 text-xs mb-1">CAPACITY</span>
-                          {vehicle.seating} Passengers
+                      <div className="space-y-6 mb-10">
+                        <div className="grid grid-cols-2 gap-4">
+                           <div className="bg-white/[0.03] p-4 rounded-3xl border border-white/5">
+                              <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest mb-1">{t('fleet.capacity')}</p>
+                              <p className="text-white font-dm font-bold flex items-center gap-2"><FiUsers size={14} className="text-gold" /> {vehicle.seating} PAX</p>
+                           </div>
+                           <div className="bg-white/[0.03] p-4 rounded-3xl border border-white/5">
+                              <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest mb-1">{t('fleet.price')}</p>
+                              <p className="text-white font-dm font-bold text-lg">{vehicle.priceHourly}<span className="text-[10px] text-white/20 ml-1">/HR</span></p>
+                           </div>
                         </div>
-                        <div className="text-white/80">
-                          <span className="block text-gray-500 text-xs mb-1">RATES STARTING</span>
-                          {vehicle.priceHourly} / hr
-                        </div>
-                        <div className="col-span-2 text-white/80">
-                          <span className="block text-gray-500 text-xs mb-1">AMENITIES</span>
-                          {vehicle.features.join(' • ')}
+                        
+                        <div className="flex flex-wrap gap-2">
+                           {vehicle.features.slice(0, 3).map((f, i) => (
+                             <span key={i} className="text-[10px] text-white/40 font-dm border border-white/5 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                               <FiCheckCircle size={10} className="text-gold" /> {f}
+                             </span>
+                           ))}
                         </div>
                       </div>
 
-                      <div className="flex gap-3 mt-auto">
-                        <Button variant="secondary" className="flex-1 !py-3 !px-2 text-sm" onClick={() => window.location.href='/contact'}>Specs</Button>
-                        <Button className="flex-1 !py-3 !px-2 text-sm" onClick={() => window.location.href='/booking'}>Reserve</Button>
+                      <div className="grid grid-cols-2 gap-4">
+                        <Button 
+                          variant="secondary" 
+                          className="!rounded-2xl h-14 border-white/10 text-white/60 hover:text-white"
+                          onClick={() => window.location.href=`/fleet/${vehicle.id}`}
+                        >
+                          {t('fleet.details')}
+                        </Button>
+                        <Button 
+                          className="!rounded-2xl h-14 shadow-glow group/btn"
+                          onClick={() => window.location.href='/booking'}
+                        >
+                          <span>{t('fleet.bookNow')}</span>
+                          <FiArrowRight className="ml-2 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
+
           {filteredFleet.length === 0 && (
-            <div className="text-center py-20">
-              <p className="font-dm text-white/50 text-lg">No vehicles found in this category.</p>
-              <Button variant="secondary" className="mt-6" onClick={() => setActiveCategory('All')}>View All Fleet</Button>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-32"
+            >
+              <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8 border border-white/10">
+                 <FiUsers size={32} className="text-white/20" />
+              </div>
+              <p className="font-dm text-white/30 text-xl mb-10">No vehicles matching your selection.</p>
+              <Button 
+                variant="secondary" 
+                className="px-10 h-14 rounded-full" 
+                onClick={() => setActiveCategory('All')}
+              >
+                Reset Filters
+              </Button>
+            </motion.div>
           )}
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-32 bg-gold/5 border-y border-gold/10 relative overflow-hidden">
+        <div className="container mx-auto px-4 text-center relative z-10">
+           <h2 className="font-playfair text-4xl md:text-5xl text-white mb-6">Need a custom fleet for a large event?</h2>
+           <p className="font-dm text-white/50 text-lg mb-12 max-w-2xl mx-auto">
+             Contact our corporate concierge services for bulk bookings, specialized chauffeur needs, and event logistics management.
+           </p>
+           <Button className="h-16 px-12 rounded-full text-lg shadow-glow-strong">Contact Concierge</Button>
         </div>
       </section>
     </div>
