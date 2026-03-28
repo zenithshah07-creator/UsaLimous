@@ -133,7 +133,7 @@ const StatCounter = ({ target, suffix, label }: { target: number, suffix: string
 
   return (
     <div className="text-center" ref={ref}>
-      <div className="text-2xl font-bold text-[#eab308] mb-1 font-dm">{value}</div>
+      <div className="text-2xl font-bold text-gold mb-1 font-dm">{value}</div>
       <div className="text-[10px] uppercase tracking-widest text-white/40 font-semibold font-dm">{label}</div>
     </div>
   );
@@ -235,12 +235,19 @@ export default function Home() {
             transition={{ delay: 0.55, duration: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-9"
           >
-            <button className="bg-[#c9a227] text-black font-bold px-9 py-3.5 rounded-full hover:bg-[#e0b930] transition-all shadow-[0_4px_24px_rgba(201,162,39,0.35)] text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 font-dm">
+            <Button 
+              className="!rounded-full !px-12 !h-14 font-bold shadow-glow text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200"
+              onClick={() => window.location.href='/booking'}
+            >
               {t('hero.bookRide')}
-            </button>
-            <button className="bg-white/10 border border-white/30 text-white font-bold px-9 py-3.5 rounded-full hover:bg-white/20 transition-all backdrop-blur-sm text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 font-dm">
+            </Button>
+            <Button 
+              variant="secondary"
+              className="!rounded-full !px-12 !h-14 font-bold backdrop-blur-sm text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 !border-white/30 !text-white hover:!bg-white/10"
+              onClick={() => window.location.href='/fleet'}
+            >
               {t('hero.viewFleet')}
-            </button>
+            </Button>
           </motion.div>
 
           {/* Stats */}

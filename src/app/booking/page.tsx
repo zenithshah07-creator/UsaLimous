@@ -495,7 +495,7 @@ export default function Booking() {
                         Thank you, <span className="text-gold font-bold">{watch('name')}</span>. Our elite concierge team has received your request and is currently verifying luxury vehicle availability.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Button onClick={() => window.location.href='/'} className="px-10 h-14 bg-white text-primary-dark hover:bg-gold">Return to Home</Button>
+                        <Button onClick={() => window.location.href='/'} className="px-10 h-14 shadow-glow">Return to Home</Button>
                         <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">Explore More Vehicles</Button>
                       </div>
                     </motion.div>
@@ -524,7 +524,7 @@ export default function Booking() {
                         {t('booking.next')} <FiArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
                       </Button>
                     ) : (
-                      <Button type="submit" form="booking-form" className="h-14 !bg-white !text-primary-dark hover:!bg-gold hover:!text-primary-dark shadow-glow-strong px-10 font-bold">
+                      <Button type="submit" form="booking-form" className="h-14 shadow-glow-strong px-12 font-bold uppercase tracking-widest text-xs">
                         {t('booking.submit')}
                       </Button>
                     )}
