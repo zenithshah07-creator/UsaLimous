@@ -1,4 +1,4 @@
-export const OWNER_WHATSAPP = '9779805129944';
+export const OWNER_WHATSAPP = '9779851249747';
 
 export const generateBookingWhatsAppLink = (data: any) => {
   const message = `

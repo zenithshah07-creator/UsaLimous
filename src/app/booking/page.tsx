@@ -59,6 +59,8 @@ export default function Booking() {
   }, [selectedVehicle, tripType]);
 
   const [submittedData, setSubmittedData] = useState<any>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const onSubmit = async (data: BookingFormData) => {
     if (step < 4) {
@@ -66,25 +68,32 @@ export default function Booking() {
       return;
     }
 
+    // Just collect the data and show the review/confirmation screen.
+    // No API call yet — the user must manually confirm.
     const fullData = {
       ...data,
       estimatedPrice,
       vehicleName: selectedVehicle?.name || 'Standard Luxury Vehicle'
     };
     setSubmittedData(fullData);
-    
+    setStep(5);
+  };
+
+  const confirmBooking = async () => {
+    if (!submittedData || isConfirming) return;
+    setIsConfirming(true);
     try {
       await fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fullData),
+        body: JSON.stringify(submittedData),
       });
-      setStep(5);
     } catch (err) {
-      console.error('Failed to submit booking:', err);
-      // Still show success to user
-      setStep(5);
+      console.error('Failed to notify owner:', err);
     }
+    setIsConfirming(false);
+    setIsConfirmed(true);
+    window.open(generateBookingWhatsAppLink(submittedData), '_blank');
   };
 
   const nextStep = async () => {
@@ -508,7 +517,7 @@ export default function Booking() {
                     </motion.div>
                   )}
 
-                  {/* STEP 5: SUCCESS */}
+                  {/* STEP 5: REVIEW & CONFIRM */}
                   {step === 5 && (
                     <motion.div
                       key="step5"
@@ -520,23 +529,116 @@ export default function Booking() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", damping: 15, delay: 0.2 }}
-                        className="w-24 h-24 bg-gold rounded-full mx-auto flex items-center justify-center text-primary-dark shadow-glow-strong mb-10"
+                        className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center shadow-glow-strong mb-10 transition-colors duration-500 ${
+                          isConfirmed ? 'bg-gold text-primary-dark' : 'bg-gold/20 border-2 border-gold text-gold'
+                        }`}
                       >
                         <FiCheckCircle size={48} />
                       </motion.div>
-                      <h2 className="font-playfair text-4xl md:text-5xl text-white mb-6">Reservation Transmitted</h2>
-                      <p className="font-dm text-white/50 text-xl mb-12 max-w-xl mx-auto leading-relaxed">
-                        Thank you, <span className="text-gold font-bold">{watch('name')}</span>. Our elite concierge team has received your request and is currently verifying luxury vehicle availability.
-                      </p>
-                      <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Button 
-                          className="px-10 h-14 shadow-glow group"
-                          onClick={() => window.open(generateBookingWhatsAppLink(submittedData), '_blank')}
-                        >
-                          Confirm via WhatsApp <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
-                        </Button>
-                        <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">Explore More Vehicles</Button>
-                      </div>
+
+                      {!isConfirmed ? (
+                        <>
+                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-4">Review & Confirm</h2>
+                          <p className="font-dm text-white/50 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+                            Hi <span className="text-gold font-bold">{watch('name')}</span>, your itinerary is ready. Tap the button below to confirm your booking via WhatsApp.
+                          </p>
+                          <div className="bg-gold/5 border border-gold/20 rounded-2xl p-6 max-w-2xl mx-auto mb-10 text-left space-y-1">
+                            <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mb-4">Full Booking Summary</p>
+
+                            {/* Journey Details */}
+                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-2 pb-1">Journey</p>
+                            <div className="space-y-2 border-l-2 border-gold/20 pl-4">
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Service Type</span>
+                                <span className="text-white font-semibold text-right capitalize">{submittedData?.tripType?.replace(/([A-Z])/g, ' $1')}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Vehicle</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.vehicleName}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Passengers</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.passengers} PAX</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Pickup</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.pickup}</span>
+                              </div>
+                              {submittedData?.dropoff && (
+                                <div className="flex justify-between text-sm font-dm gap-4">
+                                  <span className="text-white/50 shrink-0">Drop-off</span>
+                                  <span className="text-white font-semibold text-right">{submittedData?.dropoff}</span>
+                                </div>
+                              )}
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Date</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.date}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Time</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.time}</span>
+                              </div>
+                            </div>
+
+                            {/* Guest Info */}
+                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">Guest Information</p>
+                            <div className="space-y-2 border-l-2 border-gold/20 pl-4">
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Name</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.name}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Email</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.email}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-dm gap-4">
+                                <span className="text-white/50 shrink-0">Phone</span>
+                                <span className="text-white font-semibold text-right">{submittedData?.phone}</span>
+                              </div>
+                              {submittedData?.company && (
+                                <div className="flex justify-between text-sm font-dm gap-4">
+                                  <span className="text-white/50 shrink-0">Company</span>
+                                  <span className="text-white font-semibold text-right">{submittedData?.company}</span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Special Requests */}
+                            {submittedData?.requests && (
+                              <>
+                                <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">Special Requests</p>
+                                <div className="border-l-2 border-gold/20 pl-4">
+                                  <p className="text-white/70 text-sm font-dm italic leading-relaxed">{submittedData?.requests}</p>
+                                </div>
+                              </>
+                            )}
+
+                            {/* Price */}
+                            <div className="flex justify-between text-sm font-dm border-t border-white/10 pt-4 mt-4 items-center">
+                              <span className="text-white/50 font-bold uppercase tracking-widest text-[10px]">Estimated Price</span>
+                              <span className="text-gold font-bold text-2xl">${submittedData?.estimatedPrice}</span>
+                            </div>
+                          </div>
+                          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button
+                              className="px-10 h-14 shadow-glow group"
+                              onClick={confirmBooking}
+                              disabled={isConfirming}
+                            >
+                              {isConfirming ? 'Sending...' : 'Confirm via WhatsApp'} <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
+                            </Button>
+                            <Button variant="secondary" onClick={() => setStep(4)} className="px-10 h-14 border-white/10">← Edit Details</Button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-6">Booking Confirmed!</h2>
+                          <p className="font-dm text-white/50 text-xl mb-12 max-w-xl mx-auto leading-relaxed">
+                            Thank you, <span className="text-gold font-bold">{watch('name')}</span>. Our elite concierge team has received your request and will be in touch shortly.
+                          </p>
+                          <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">Explore More Vehicles</Button>
+                        </>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
