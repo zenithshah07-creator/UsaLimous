@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { blogPosts } from '@/data/mockData';
 import { FiClock, FiCalendar, FiUser, FiChevronLeft, FiFacebook, FiTwitter, FiLinkedin } from 'react-icons/fi';
+import Image from 'next/image';
 
 export default function BlogPost() {
   const params = useParams();
@@ -23,10 +24,13 @@ export default function BlogPost() {
       <section className="relative h-[60vh] min-h-[500px] flex items-end pb-20 overflow-hidden border-b border-gray-charcoal">
         <div className="absolute inset-0 bg-primary-dark/80 z-10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/50 to-transparent z-10"></div>
-        <img 
+        <Image 
           src={activePost.image} 
           alt={activePost.title} 
-          className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-[20s] ease-linear origin-center hover:scale-110"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover z-0 transition-transform duration-[20s] ease-linear origin-center hover:scale-110"
         />
 
         <div className="container mx-auto px-4 lg:px-10 relative z-20 max-w-4xl">
@@ -101,7 +105,9 @@ export default function BlogPost() {
 
               {/* Author Bio */}
               <div className="bg-gray-charcoal p-8 rounded-lg border border-gray-dark flex gap-6 items-center">
-                <img src="/Assets/Herosection55.jpg" alt={activePost.author} className="w-20 h-20 rounded-full object-cover border-2 border-gold" />
+                <div className="relative w-20 h-20 shrink-0">
+                  <Image src="/Assets/Herosection55.jpg" alt={activePost.author} fill sizes="80px" className="rounded-full object-cover border-2 border-gold" />
+                </div>
                 <div>
                   <h4 className="font-cormorant text-2xl text-gold mb-1">{activePost.author}</h4>
                   <p className="font-dm text-white/50 text-sm mb-2">Senior Concierge Editor</p>
@@ -124,7 +130,7 @@ export default function BlogPost() {
               <Link href={`/blog/${post.slug}`} key={post.id} className="group block">
                 <div className="bg-primary-dark border border-gray-dark rounded-lg overflow-hidden h-full">
                   <div className="h-40 overflow-hidden relative">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <Image src={post.image} alt={post.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div className="p-6">
                     <span className="text-gold text-xs font-dm font-bold tracking-wider uppercase mb-2 block">{post.category}</span>

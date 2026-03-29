@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { FiAward, FiUsers, FiClock, FiShield, FiLinkedin, FiMail } from 'react-icons/fi';
 import PageHero from '@/components/ui/PageHero';
+import Image from 'next/image';
 
 const team = [
   { name: 'Robert Stirling', role: 'Founder & CEO', image: '/Assets/Herosection1.jpg', bio: 'With 20 years in luxury transport, Robert sets our gold standard for service.' },
@@ -51,7 +52,7 @@ export default function About() {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-gold/10 transform translate-x-4 translate-y-4 rounded-lg"></div>
-                <img src="/Assets/Costumer trust.webp" alt="Luxury Fleet" className="rounded-lg relative z-10 shadow-heavy w-full" />
+                <Image src="/Assets/Costumer trust.webp" alt="Luxury Fleet" width={800} height={600} className="rounded-lg relative z-10 shadow-heavy w-full h-auto" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
             </motion.div>
           </div>
@@ -105,7 +106,7 @@ export default function About() {
               >
                 <Card variant="dark" hoverEffect className="group text-center">
                   <div className="w-40 h-40 mx-auto rounded-full overflow-hidden mb-6 border-2 border-transparent group-hover:border-gold transition-colors">
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <Image src={member.image} alt={member.name} width={160} height={160} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <h3 className="font-cormorant text-2xl text-gold mb-1">{member.name}</h3>
                   <p className="font-dm text-white/70 text-sm mb-4 tracking-wide">{member.role}</p>

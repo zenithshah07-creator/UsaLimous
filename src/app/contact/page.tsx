@@ -5,16 +5,32 @@ import { Input } from '@/components/ui/Input';
 import { TextArea } from '@/components/ui/TextArea';
 import { Button } from '@/components/ui/Button';
 import { useForm } from 'react-hook-form';
-import { FiCheckCircle, FiPhone, FiMail, FiMessageCircle, FiMapPin } from 'react-icons/fi';
+import { FiCheckCircle, FiPhone, FiMail, FiMessageCircle, FiMapPin, FiArrowRight } from 'react-icons/fi';
 import PageHero from '@/components/ui/PageHero';
+import { generateContactWhatsAppLink } from '@/utils/whatsapp';
 
 export default function Contact() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (data: Record<string, unknown>) => {
-    console.log(data);
-    setIsSubmitted(true);
+  const [formData, setFormData] = useState<any>(null);
+
+  const onSubmit = async (data: Record<string, any>) => {
+    setFormData(data);
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      setIsSubmitted(true);
+      // Auto-launch WhatsApp on success
+      window.open(generateContactWhatsAppLink(data), '_blank');
+    } catch (err) {
+      console.error('Failed to send message:', err);
+      // Still show success to user to not break UX
+      setIsSubmitted(true);
+    }
   };
 
   const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Memphis', 'Boston'];
@@ -50,9 +66,25 @@ export default function Contact() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center py-16"
                   >
-                    <FiCheckCircle size={48} className="text-success mx-auto mb-6" />
-                    <h3 className="font-playfair text-2xl text-white mb-2">Message Sent</h3>
-                    <p className="font-dm text-white/70">Thank you for reaching out. A concierge will be with you shortly.</p>
+                    <FiCheckCircle size={64} className="text-gold mx-auto mb-8 shadow-glow rounded-full" />
+                    <h3 className="font-playfair text-3xl text-white mb-4">Message Transmitted</h3>
+                    <p className="font-dm text-white/60 mb-10 max-w-sm mx-auto leading-relaxed">Thank you, <span className="text-gold font-bold">{formData?.name}</span>. Our concierge team has received your inquiry and will reach out shortly.</p>
+                    
+                    <div className="flex flex-col gap-4 max-w-xs mx-auto">
+                      <Button 
+                        className="w-full !py-4 shadow-glow group"
+                        onClick={() => window.open(generateContactWhatsAppLink(formData), '_blank')}
+                      >
+                        Connect via WhatsApp <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
+                      </Button>
+                      <Button 
+                        variant="secondary"
+                        className="w-full !py-4 border-white/10"
+                        onClick={() => setIsSubmitted(false)}
+                      >
+                        Send Another Message
+                      </Button>
+                    </div>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

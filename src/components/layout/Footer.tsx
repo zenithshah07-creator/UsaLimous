@@ -41,7 +41,7 @@ export default function Footer() {
               {['About Us', 'Our Services', 'Premium Fleet', 'Luxury Blog', 'Contact Us'].map((link) => (
                 <li key={link}>
                   <Link href={`/${link.toLowerCase().replace(' ', '-')}`} className="text-white/80 hover:text-gold transition-colors font-dm text-sm flex items-center group">
-                    <span className="w-2 h-2 rounded-full bg-gold mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    <span className="block h-[1px] w-0 bg-gold mr-0 group-hover:w-4 group-hover:mr-3 transition-all duration-300"></span>
                     {link}
                   </Link>
                 </li>

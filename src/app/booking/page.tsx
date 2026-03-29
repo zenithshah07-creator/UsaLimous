@@ -6,8 +6,10 @@ import { Input } from '@/components/ui/Input';
 import { TextArea } from '@/components/ui/TextArea';
 import { Button } from '@/components/ui/Button';
 import { fleet } from '@/data/mockData';
-import { FiCheckCircle, FiArrowRight, FiArrowLeft, FiMapPin, FiCalendar, FiClock, FiUsers, FiInfo } from 'react-icons/fi';
+import { FiCheckCircle, FiArrowRight, FiArrowLeft, FiMapPin, FiCalendar, FiClock, FiUsers, FiInfo, FiMessageCircle } from 'react-icons/fi';
 import { useLanguage } from '@/context/LanguageContext';
+import { generateBookingWhatsAppLink } from '@/utils/whatsapp';
+import Image from 'next/image';
 
 interface BookingFormData {
   tripType: string;
@@ -28,8 +30,12 @@ interface BookingFormData {
 export default function Booking() {
   const [step, setStep] = useState(1);
   const { t } = useLanguage();
-  const { register, handleSubmit, watch, formState: { errors }, trigger } = useForm<BookingFormData>();
-  
+  const { register, handleSubmit, watch, formState: { errors }, trigger } = useForm<BookingFormData>({
+    defaultValues: {
+      passengers: 1,
+      tripType: 'airport'
+    }
+  });
   const tripType = watch('tripType', 'airport');
   const selectedVehicleId = watch('vehicle');
   const passengers = watch('passengers', 1);
@@ -52,9 +58,33 @@ export default function Booking() {
     return Math.round(basePrice);
   }, [selectedVehicle, tripType]);
 
-  const onSubmit = (data: BookingFormData) => {
-    console.log("Booking submitted:", { ...data, estimatedPrice });
-    setStep(5); // Success step
+  const [submittedData, setSubmittedData] = useState<any>(null);
+
+  const onSubmit = async (data: BookingFormData) => {
+    if (step < 4) {
+      nextStep();
+      return;
+    }
+
+    const fullData = {
+      ...data,
+      estimatedPrice,
+      vehicleName: selectedVehicle?.name || 'Standard Luxury Vehicle'
+    };
+    setSubmittedData(fullData);
+    
+    try {
+      await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fullData),
+      });
+      setStep(5);
+    } catch (err) {
+      console.error('Failed to submit booking:', err);
+      // Still show success to user
+      setStep(5);
+    }
   };
 
   const nextStep = async () => {
@@ -173,14 +203,15 @@ export default function Booking() {
                               type="number" 
                               min="1"
                               max="14"
-                              className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all font-bold placeholder:font-normal"
+                              className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.passengers ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all font-bold placeholder:font-normal`}
                               placeholder="1"
-                              {...register('passengers', { required: true, min: 1 })}
+                              {...register('passengers', { required: 'Passengers required', min: {value: 1, message: 'Min 1'}, valueAsNumber: true })}
                             />
                             <div className="absolute right-5 top-1/2 -translate-y-1/2 text-gold/50 pointer-events-none">
                               <FiUsers size={16} />
                             </div>
                           </div>
+                          {errors.passengers && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.passengers.message as string}</p>}
                         </div>
                       </div>
 
@@ -207,13 +238,14 @@ export default function Booking() {
                                 </select>
                               ) : (
                                 <input 
-                                  className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 pr-12 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all"
+                                  className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 pr-12 rounded-xl border ${errors.dropoff ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all`}
                                   placeholder="Destination"
-                                  {...register('dropoff', { required: tripType !== 'hourly' })}
+                                  {...register('dropoff', { required: tripType !== 'hourly' ? 'Drop-off is required' : false })}
                                 />
                               )}
                              <FiMapPin className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
                            </div>
+                           {errors.dropoff && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.dropoff.message as string}</p>}
                         </div>
                       </div>
 
@@ -223,20 +255,22 @@ export default function Booking() {
                            <div className="relative">
                              <input 
                                type="date"
-                               className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all dark-calendar-inverse appearance-none"
-                               {...register('date', { required: true })}
+                               className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.date ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all dark-calendar-inverse appearance-none`}
+                               {...register('date', { required: 'Date is required' })}
                              />
                            </div>
+                           {errors.date && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.date.message as string}</p>}
                         </div>
                          <div className="space-y-2">
                            <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Pickup Time</label>
                            <div className="relative">
                              <input 
                                type="time"
-                               className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all appearance-none"
-                               {...register('time', { required: true })}
+                               className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.time ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all appearance-none`}
+                               {...register('time', { required: 'Time is required' })}
                              />
                            </div>
+                           {errors.time && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.time.message as string}</p>}
                         </div>
                       </div>
                     </motion.div>
@@ -274,7 +308,7 @@ export default function Booking() {
                             />
                             
                             <div className="w-full md:w-56 h-36 rounded-xl overflow-hidden shrink-0 relative bg-primary-dark shadow-heavy">
-                              <img src={v.image} alt={v.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                              <Image src={v.image} alt={v.name} fill sizes="(max-width: 768px) 100vw, 224px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
                               <div className="absolute top-2 right-2 flex gap-1">
                                 <span className="bg-primary-dark/80 backdrop-blur-md text-gold text-[8px] font-bold px-2 py-0.5 rounded-full border border-gold/30">
                                   {v.category}
@@ -441,7 +475,7 @@ export default function Booking() {
                            {selectedVehicle && (
                              <div className="space-y-6">
                                <div className="rounded-2xl overflow-hidden h-40 border border-white/10 relative shadow-deep">
-                                 <img src={selectedVehicle.image} alt="" className="w-full h-full object-cover" />
+                                 <Image src={selectedVehicle.image} alt={selectedVehicle.name} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
                                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                  <p className="absolute bottom-4 left-4 text-white font-playfair text-xl font-bold">{selectedVehicle.name}</p>
                                </div>
@@ -495,7 +529,12 @@ export default function Booking() {
                         Thank you, <span className="text-gold font-bold">{watch('name')}</span>. Our elite concierge team has received your request and is currently verifying luxury vehicle availability.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Button onClick={() => window.location.href='/'} className="px-10 h-14 shadow-glow">Return to Home</Button>
+                        <Button 
+                          className="px-10 h-14 shadow-glow group"
+                          onClick={() => window.open(generateBookingWhatsAppLink(submittedData), '_blank')}
+                        >
+                          Confirm via WhatsApp <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
+                        </Button>
                         <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">Explore More Vehicles</Button>
                       </div>
                     </motion.div>
@@ -505,26 +544,26 @@ export default function Booking() {
 
               {/* Navigation Actions */}
               {step < 5 && (
-                <div className="flex justify-between mt-16 pt-10 border-t border-white/5">
-                  <div className="w-1/3">
+                <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-6 md:gap-0 mt-12 md:mt-16 pt-8 md:pt-10 border-t border-white/5">
+                  <div className="w-full md:w-1/3 flex justify-start">
                     {step > 1 && (
-                      <Button variant="secondary" onClick={prevStep} type="button" className="h-12 border-white/10 text-white/60 hover:text-white hover:border-white/30 group">
+                      <Button variant="secondary" onClick={prevStep} type="button" className="w-full md:w-auto h-12 border-white/10 text-white/60 hover:text-white hover:border-white/30 group justify-center">
                         <FiArrowLeft className="mr-2 transition-transform group-hover:-translate-x-1" /> {t('booking.back')}
                       </Button>
                     )}
                   </div>
                   
-                  <div className="w-1/3 text-center flex items-center justify-center">
-                    <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{t('booking.steps.details')} {step} / 4</p>
+                  <div className="w-full md:w-1/3 text-center flex items-center justify-center">
+                    <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest">{t('booking.steps.details')} {step} / 4</p>
                   </div>
 
-                  <div className="w-1/3 text-right flex justify-end">
+                  <div className="w-full md:w-1/3 flex justify-end">
                     {step < 4 ? (
-                      <Button onClick={nextStep} type="button" className="h-12 shadow-glow group pl-8 pr-6">
+                      <Button onClick={nextStep} type="button" className="w-full md:w-auto h-12 shadow-glow group pl-8 pr-6 justify-center">
                         {t('booking.next')} <FiArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
                       </Button>
                     ) : (
-                      <Button type="submit" form="booking-form" className="h-14 shadow-glow-strong px-12 font-bold uppercase tracking-widest text-xs">
+                      <Button type="submit" form="booking-form" className="w-full md:w-auto h-14 shadow-glow-strong px-12 font-bold uppercase tracking-widest text-xs justify-center">
                         {t('booking.submit')}
                       </Button>
                     )}

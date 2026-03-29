@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { FiX, FiCheckCircle, FiArrowRight, FiInfo } from 'react-icons/fi';
 import { useLanguage } from '@/context/LanguageContext';
 import PageHero from '@/components/ui/PageHero';
+import Image from 'next/image';
 
 export default function Services() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -43,10 +44,12 @@ export default function Services() {
                 <div className="relative bg-[#161b22] rounded-[40px] overflow-hidden border border-white/5 shadow-deep transition-all duration-700 hover:border-gold/30 hover:shadow-glow-strong h-full flex flex-col md:flex-row">
                   {/* Image Side */}
                   <div className="w-full md:w-2/5 h-[300px] md:h-auto relative overflow-hidden">
-                    <img 
+                    <Image 
                       src={service.image} 
                       alt={service.name} 
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-110" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#161b22] via-transparent to-transparent"></div>
                     <div className="absolute top-6 left-6 text-5xl drop-shadow-2xl">{service.icon}</div>
@@ -116,7 +119,7 @@ export default function Services() {
               </button>
 
               <div className="w-full lg:w-1/2 h-80 lg:h-auto relative">
-                <img src={openService.image} alt={openService.name} className="w-full h-full object-cover" />
+                <Image src={openService.image} alt={openService.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#0d1117] via-transparent to-transparent"></div>
                 <div className="absolute top-12 left-12 text-7xl">{openService.icon}</div>
               </div>

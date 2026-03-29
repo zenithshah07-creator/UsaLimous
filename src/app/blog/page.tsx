@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { blogPosts } from '@/data/mockData';
 import { FiClock, FiCalendar, FiUser } from 'react-icons/fi';
 import PageHero from '@/components/ui/PageHero';
+import Image from 'next/image';
 
 export default function BlogListing() {
   const categories = ['Travel Tips', 'Corporate', 'Weddings', 'Fleet News', 'Luxury Lifestyle'];
@@ -40,7 +41,7 @@ export default function BlogListing() {
                     {/* Image */}
                     <div className="h-48 overflow-hidden relative">
                        <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-20"></Link>
-                       <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                       <Image src={post.image} alt={post.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
                        <div className="absolute top-4 left-4 z-10 bg-gold text-primary-dark font-dm text-xs font-bold px-3 py-1 rounded">
                          {post.category}
                        </div>
@@ -110,8 +111,8 @@ export default function BlogListing() {
                 <div className="space-y-6">
                   {blogPosts.slice(0,3).map(post => (
                     <div key={post.id} className="flex gap-4 group cursor-pointer" onClick={() => window.location.href=`/blog/${post.slug}`}>
-                      <div className="w-16 h-16 rounded overflow-hidden shrink-0">
-                        <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <div className="w-16 h-16 rounded overflow-hidden shrink-0 relative">
+                        <Image src={post.image} alt={post.title} fill sizes="64px" className="object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <div className="flex flex-col justify-center">
                          <h4 className="font-cormorant text-white group-hover:text-gold transition-colors line-clamp-2 leading-tight mb-1">{post.title}</h4>

@@ -9,6 +9,7 @@ import { FiCheckCircle, FiStar, FiClock, FiUsers, FiAward } from 'react-icons/fi
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -180,12 +181,15 @@ export default function Home() {
         {/* Background images — CSS crossfade, always visible */}
         <div className="absolute inset-0 z-0">
           {HERO_IMAGES.map((src, i) => (
-            <img
+            <Image
               key={src}
               src={src}
               alt={`Luxury background ${i + 1}`}
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
+              fill
+              priority={i === 0}
+              className="object-cover transition-opacity duration-[1500ms] ease-in-out"
               style={{ opacity: i === currentImageIndex ? 1 : 0 }}
+              sizes="100vw"
             />
           ))}
           <div className="absolute inset-0 bg-black/50" />
@@ -393,10 +397,12 @@ export default function Home() {
                   <Card variant="dark" hoverEffect className="p-0 overflow-hidden h-full flex flex-col group border border-white/5 hover:border-gold/20 transition-all duration-500 rounded-2xl">
                     <div className="h-64 overflow-hidden relative">
                       <div className="absolute inset-0 bg-primary-dark/20 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
-                      <img 
+                      <Image 
                         src={vehicle.image} 
                         alt={vehicle.name} 
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
                       />
                       <div className="absolute top-4 right-4 z-20">
                          <span className="bg-gold text-primary-dark px-3 py-1 rounded-full text-xs font-bold shadow-glow">
@@ -466,7 +472,9 @@ export default function Home() {
                   </div>
                   <p className="font-dm italic text-white/90 text-lg leading-relaxed mb-10">&quot;{t.text}&quot;</p>
                   <div className="flex items-center gap-5 mt-auto">
-                    <img src={t.image} alt={t.name} className="w-14 h-14 rounded-full border-2 border-gold/20 p-0.5 object-cover" />
+                    <div className="relative w-14 h-14 shrink-0">
+                      <Image src={t.image} alt={t.name} fill sizes="56px" className="rounded-full border-2 border-gold/20 p-0.5 object-cover" />
+                    </div>
                     <div>
                       <h4 className="font-playfair text-xl font-bold text-white">{t.name}</h4>
                       <p className="font-dm text-xs text-gold/60 uppercase tracking-widest">{t.title}</p>
