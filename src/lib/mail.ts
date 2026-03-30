@@ -32,11 +32,11 @@ export const getBookingEmailTemplate = (data: any) => {
           </tr>
           <tr>
             <td style="padding: 10px 0; color: #D4AF37; font-weight: bold;">Phone</td>
-            <td style="padding: 10px 0;">${data.phone}</td>
+            <td style="padding: 10px 0;"><a href="tel:${data.phone}" style="color: #FFFFFF; text-decoration: none;">${data.phone}</a></td>
           </tr>
           <tr>
             <td style="padding: 10px 0; color: #D4AF37; font-weight: bold;">Email</td>
-            <td style="padding: 10px 0;">${data.email}</td>
+            <td style="padding: 10px 0;"><a href="mailto:${data.email}" style="color: #D4AF37; text-decoration: underline;">${data.email}</a></td>
           </tr>
           <tr>
             <td style="padding: 20px 0;" colspan="2"><hr style="border: none; border-top: 1px solid #2A2A2A;" /></td>
@@ -100,8 +100,8 @@ export const getContactEmailTemplate = (data: any) => {
         <h2 style="font-family: 'Playfair Display', serif; color: #D4AF37; border-bottom: 1px solid #2A2A2A; padding-bottom: 15px; margin-bottom: 25px;">New Contact Message</h2>
         
         <p><strong>From:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
+        <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #D4AF37; text-decoration: underline;">${data.email}</a></p>
+        ${data.phone ? `<p><strong>Phone:</strong> <a href="tel:${data.phone}" style="color: #FFFFFF; text-decoration: none;">${data.phone}</a></p>` : ''}
         <p><strong>Subject:</strong> ${data.subject}</p>
         
         <div style="margin-top: 30px; padding: 25px; background-color: #1A1A1A; border-radius: 12px; border-left: 4px solid #D4AF37;">

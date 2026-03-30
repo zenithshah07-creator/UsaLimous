@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { FiMenu, FiX, FiPhone, FiGlobe } from 'react-icons/fi';
+import { FiMenu, FiX, FiGlobe } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -75,22 +75,7 @@ export default function Header() {
             <span className="uppercase">{locale}</span>
           </button>
 
-          <a href="tel:+18005550199" className="flex items-center gap-3 font-dm text-sm font-medium group">
-            {/* Animated call button */}
-            <div className="relative flex items-center justify-center w-10 h-10 shrink-0">
-              {/* Sonar ring 1 — gold */}
-              <span className="call-ring-1 absolute inset-0 rounded-full border-2 border-[#D4AF37]/70" />
-              {/* Sonar ring 2 — gold, delayed */}
-              <span className="call-ring-2 absolute inset-0 rounded-full border-2 border-[#D4AF37]/45" />
-              {/* Gold glowing circle */}
-              <span className="absolute inset-0 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/60 shadow-[0_0_12px_3px_rgba(212,175,55,0.35)]" />
-              {/* Phone icon wiggling */}
-              <span className="phone-wiggle relative z-10 text-[#D4AF37]">
-                <FiPhone size={15} />
-              </span>
-            </div>
-            <span className="hidden xl:inline text-white group-hover:text-gold transition-colors">800-555-0199</span>
-          </a>
+
           <Button variant="primary" className="!py-2 !px-4 xl:!py-2.5 xl:!px-6 text-xs xl:text-sm" onClick={() => window.location.href='/booking'}>{t('nav.bookNow')}</Button>
         </div>
 
@@ -136,9 +121,7 @@ export default function Header() {
                 </Link>
               ))}
               <div className="px-6 py-8 flex flex-col gap-4 bg-gray-charcoal/30 mt-4">
-                <Button variant="secondary" className="w-full justify-center" onClick={() => window.location.href='tel:+18005550199'}>
-                  <FiPhone className="mr-2" /> 800-555-0199
-                </Button>
+
                 <Button variant="primary" className="w-full justify-center" onClick={() => { setIsOpen(false); window.location.href='/booking'; }}>
                   {t('nav.bookNow')}
                 </Button>

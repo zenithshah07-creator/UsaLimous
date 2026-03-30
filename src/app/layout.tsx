@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
+import FloatingContact from '@/components/ui/FloatingContact';
 
 export const metadata: Metadata = {
   title: 'USA Limos Service | Premium Luxury Travel',
@@ -21,6 +22,7 @@ export default function RootLayout({
           <Header />
           <main className="min-h-screen pt-[72px]">{children}</main>
           <Footer />
+          <FloatingContact />
         </LanguageProvider>
       </body>
     </html>
