@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-primary-dark pt-20 pb-8 border-t border-gray-dark">
       <div className="container mx-auto px-4 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-16">
           
           {/* Company Info */}
           <div>
@@ -58,6 +58,21 @@ export default function Footer() {
                   <Link href="/services" className="text-white/80 hover:text-gold transition-colors font-dm text-sm flex items-center group">
                     <span className="block h-[1px] w-0 bg-gold mr-0 group-hover:w-4 group-hover:mr-3 transition-all duration-300"></span>
                     {service}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Service Areas */}
+          <div>
+            <h4 className="font-playfair text-xl text-gold mb-6">Service Areas</h4>
+            <ul className="space-y-4">
+              {['California', 'New Jersey', 'Chicago, IL', 'Florida', 'Texas', 'Atlanta, GA'].map((area) => (
+                <li key={area}>
+                  <Link href="/contact" className="text-white/80 hover:text-gold transition-colors font-dm text-sm flex items-center group">
+                    <span className="block h-[1px] w-0 bg-gold mr-0 group-hover:w-4 group-hover:mr-3 transition-all duration-300"></span>
+                    {area}
                   </Link>
                 </li>
               ))}

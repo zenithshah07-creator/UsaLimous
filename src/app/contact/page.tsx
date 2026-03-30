@@ -33,7 +33,7 @@ export default function Contact() {
     }
   };
 
-  const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Memphis', 'Boston'];
+  const cities = ['California', 'New Jersey', 'Chicago, IL', 'Florida', 'Texas', 'Atlanta, GA'];
 
   return (
     <div className="bg-primary-dark">
