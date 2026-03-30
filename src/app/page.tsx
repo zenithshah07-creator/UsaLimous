@@ -255,7 +255,7 @@ export default function Home() {
           </motion.div>
 
           {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-10 md:gap-16 mt-14 lg:mt-20">
+          <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-x-4 gap-y-10 md:gap-16 mt-14 lg:mt-20 mx-auto max-w-sm md:max-w-none">
             <StatCounter target={500} suffix="+" label="Happy Clients" />
             <StatCounter target={50} suffix="+" label="Cities Covered" />
             <StatCounter target={10} suffix="+" label="Years Experience" />

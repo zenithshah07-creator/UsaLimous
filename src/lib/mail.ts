@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 // TO THE USER: To make this work in production, you must set these 
 // environment variables in your deployment platform (e.g. Vercel) 
 // or in a local .env.local file.
-const GMAIL_USER = process.env.GMAIL_USER || 'usalimous3@gmail.com'; 
+const GMAIL_USER = process.env.GMAIL_USER || 'amarrauniyarusa@gmail.com'; 
 const GMAIL_PASS = process.env.GMAIL_PASS || ''; // Gmail App Password
 
 export const transporter = nodemailer.createTransport({
