@@ -12,14 +12,14 @@ export default function Fleet() {
   const [activeCategory, setActiveCategory] = useState('all');
 
   // Categories mapping
-  const categoryMap = t('fleet.categories');
+  const categoryMap = t('fleet.categories') as unknown as Record<string, string>;
   const categories = Object.keys(categoryMap);
 
   // Localized fleet data
   const fleetList = [
-    { id: 'escalade', ...t('data.fleet.escalade'), image: '/Assets/Herosection1.jpg', category: 'suv', seating: '6' },
-    { id: 'mercedes', ...t('data.fleet.mercedes'), image: '/Assets/Herosection2.jpg', category: 'sedan', seating: '3' },
-    { id: 'lincoln', ...t('data.fleet.lincoln'), image: '/Assets/Herosection3.jpg', category: 'stretch', seating: '10' }
+    { id: 'escalade', name: t('data.fleet.escalade.name'), description: t('data.fleet.escalade.description'), features: (t('data.fleet.escalade.features') as unknown as string[]) || [], image: '/Assets/Herosection1.jpg', category: 'suv', seating: '6' },
+    { id: 'mercedes', name: t('data.fleet.mercedes.name'), description: t('data.fleet.mercedes.description'), features: (t('data.fleet.mercedes.features') as unknown as string[]) || [], image: '/Assets/Herosection2.jpg', category: 'sedan', seating: '3' },
+    { id: 'lincoln', name: t('data.fleet.lincoln.name'), description: t('data.fleet.lincoln.description'), features: (t('data.fleet.lincoln.features') as unknown as string[]) || [], image: '/Assets/Herosection3.jpg', category: 'stretch', seating: '10' }
   ];
 
   const filteredFleet = activeCategory === 'all'

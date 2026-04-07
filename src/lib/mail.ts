@@ -14,7 +14,7 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-export const getBookingEmailTemplate = (data: any) => {
+export const getBookingEmailTemplate = (data: Record<string, any>) => {
   return `
     <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; background-color: #0F1419; color: #FFFFFF; border-radius: 20px; overflow: hidden; border: 1px solid #D4AF37;">
       <div style="background-color: #D4AF37; padding: 40px; text-align: center;">

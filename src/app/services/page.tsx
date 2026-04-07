@@ -13,10 +13,10 @@ export default function Services() {
 
   // Localized services data from translations
   const servicesList = [
-    { id: 'airport', ...t('data.services.airport'), image: '/Assets/Corporate Travel.jpg', icon: '✈️' },
-    { id: 'wedding', ...t('data.services.wedding'), image: '/Assets/Wedding Limousine.webp', icon: '💍' },
-    { id: 'corporate', ...t('data.services.corporate'), image: '/Assets/Corporate Travel.webp', icon: '💼' },
-    { id: 'events', ...t('data.services.events'), image: '/Assets/Events & Parties.webp', icon: '🎉' }
+    { id: 'airport', name: t('data.services.airport.name'), description: t('data.services.airport.description'), features: (t('data.services.airport.features') as unknown as string[]) || [], image: '/Assets/Corporate Travel.jpg', icon: '✈️' },
+    { id: 'wedding', name: t('data.services.wedding.name'), description: t('data.services.wedding.description'), features: (t('data.services.wedding.features') as unknown as string[]) || [], image: '/Assets/Wedding Limousine.webp', icon: '💍' },
+    { id: 'corporate', name: t('data.services.corporate.name'), description: t('data.services.corporate.description'), features: (t('data.services.corporate.features') as unknown as string[]) || [], image: '/Assets/Corporate Travel.webp', icon: '💼' },
+    { id: 'events', name: t('data.services.events.name'), description: t('data.services.events.description'), features: (t('data.services.events.features') as unknown as string[]) || [], image: '/Assets/Events & Parties.webp', icon: '🎉' }
   ];
 
   const openService = servicesList.find(s => s.id === selectedService);
@@ -65,7 +65,7 @@ export default function Services() {
                   {/* Content Side */}
                   <div className="w-full md:w-3/5 p-10 flex flex-col">
                     <h2 className="font-playfair text-3xl md:text-4xl text-white/90 mb-6 group-hover:text-gold transition-colors duration-500">{service.name}</h2>
-                    <p className="font-dm text-white/30 text-sm leading-relaxed mb-8">{service.desc}</p>
+                    <p className="font-dm text-white/30 text-sm leading-relaxed mb-8">{service.description}</p>
                     
                     <ul className="space-y-3 mb-10">
                       {service.features?.slice(0, 3).map((feature: string, i: number) => (
@@ -142,7 +142,7 @@ export default function Services() {
                   
                   <div className="space-y-8 mb-12">
                     <p className="text-white/40 font-dm text-lg leading-relaxed">
-                      {openService.desc}
+                      {openService.description}
                     </p>
                     
                     <div className="bg-white/[0.03] rounded-3xl p-8 border border-white/5">
