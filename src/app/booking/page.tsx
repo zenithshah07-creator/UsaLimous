@@ -135,7 +135,7 @@ export default function Booking() {
           >
             {t('booking.title')}
           </motion.h1>
-          <p className="font-dm text-white/50 text-lg max-w-2xl mx-auto">{t('booking.subtitle')}</p>
+          <p className="font-dm text-white/40 text-lg max-w-2xl mx-auto">{t('booking.subtitle')}</p>
         </div>
 
         {/* Progress Stepper */}
@@ -150,10 +150,10 @@ export default function Booking() {
               
               {[t('booking.steps.trip'), t('booking.steps.vehicle'), t('booking.steps.details'), t('booking.steps.review')].map((label, i) => (
                 <div key={i} className="relative z-10 flex flex-col items-center group">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-dm text-xs transition-all duration-500 border ${step > i + 1 ? 'bg-gold border-gold text-primary-dark shadow-glow' : step === i + 1 ? 'bg-primary-dark border-gold text-gold shadow-glow-strong scale-110' : 'bg-primary-dark border-white/20 text-white/30'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-dm text-xs transition-all duration-500 border ${step > i + 1 ? 'bg-gold border-gold text-primary-dark shadow-glow' : step === i + 1 ? 'bg-primary-dark border-gold text-gold shadow-glow-strong scale-110' : 'bg-primary-dark border-white/20 text-white/20'}`}>
                     {step > i + 1 ? <FiCheckCircle size={16} /> : i + 1}
                   </div>
-                  <span className={`absolute top-12 font-dm text-[10px] uppercase tracking-widest font-bold whitespace-nowrap transition-colors duration-500 ${step >= i + 1 ? 'text-gold' : 'text-white/20'}`}>{label}</span>
+                  <span className={`absolute top-12 font-dm text-[10px] uppercase tracking-widest font-bold whitespace-nowrap transition-colors duration-500 ${step >= i + 1 ? 'text-gold' : 'text-white/10'}`}>{label}</span>
                 </div>
               ))}
             </div>
@@ -182,23 +182,23 @@ export default function Booking() {
                           <FiMapPin size={24} />
                         </div>
                         <div>
-                          <h2 className="font-playfair text-2xl text-white">Journey Selection</h2>
-                          <p className="font-dm text-white/40 text-sm">Where and when would you like to travel?</p>
+                          <h2 className="font-playfair text-2xl text-white/90">{t('booking.tripSelection')}</h2>
+                          <p className="font-dm text-white/30 text-sm">{t('booking.tripSubtitle')}</p>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                          <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Service Type</label>
+                          <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{t('booking.serviceType')}</label>
                           <div className="relative">
                             <select 
-                              className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 appearance-none cursor-pointer transition-all"
+                              className="w-full bg-primary-dark/50 text-white/90 font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 appearance-none cursor-pointer transition-all"
                               {...register('tripType')}
                             >
-                              <option value="airport">Airport Transfer</option>
-                              <option value="hourly">Hourly Charter</option>
-                              <option value="wedding">Wedding Limo</option>
-                              <option value="corporate">Corporate Event</option>
+                              <option value="airport">{t('data.services.airport.name')}</option>
+                              <option value="hourly">{t('booking.duration')}</option>
+                              <option value="wedding">{t('data.services.wedding.name')}</option>
+                              <option value="corporate">{t('data.services.corporate.name')}</option>
                               <option value="pointToPoint">Point to Point</option>
                             </select>
                             <div className="absolute right-5 top-1/2 -translate-y-1/2 text-gold/50 pointer-events-none text-xs">▼</div>
@@ -206,15 +206,15 @@ export default function Booking() {
                         </div>
 
                         <div className="space-y-2">
-                          <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Passengers</label>
+                          <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{t('booking.passengers')}</label>
                           <div className="relative">
                             <input 
                               type="number" 
                               min="1"
                               max="14"
-                              className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.passengers ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all font-bold placeholder:font-normal`}
+                              className={`w-full bg-primary-dark/50 text-white/90 font-dm text-sm px-5 py-4 rounded-xl border ${errors.passengers ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all font-bold placeholder:font-normal`}
                               placeholder="1"
-                              {...register('passengers', { required: 'Passengers required', min: {value: 1, message: 'Min 1'}, valueAsNumber: true })}
+                              {...register('passengers', { required: t('booking.passengers') + ' required', min: {value: 1, message: 'Min 1'}, valueAsNumber: true })}
                             />
                             <div className="absolute right-5 top-1/2 -translate-y-1/2 text-gold/50 pointer-events-none">
                               <FiUsers size={16} />
@@ -226,12 +226,12 @@ export default function Booking() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Pickup Address</label>
+                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{t('booking.pickup')}</label>
                            <div className="relative">
                              <input 
-                               className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 pr-12 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all"
+                               className="w-full bg-primary-dark/50 text-white/90 font-dm text-sm px-5 py-4 pr-12 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 transition-all"
                                placeholder="Street, City, or Airport"
-                               {...register('pickup', { required: t('booking.steps.trip') + ' is required' })}
+                               {...register('pickup', { required: t('booking.pickup') + ' is required' })}
                              />
                              <FiMapPin className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
                            </div>
@@ -239,7 +239,7 @@ export default function Booking() {
                         </div>
 
                          <div className="space-y-2">
-                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{tripType === 'hourly' ? 'Duration' : 'Drop-off Address'}</label>
+                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{tripType === 'hourly' ? t('booking.duration') : t('booking.dropoff')}</label>
                            <div className="relative">
                               {tripType === 'hourly' ? (
                                 <select className="w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-gold/50 appearance-none cursor-pointer transition-all">
@@ -249,7 +249,7 @@ export default function Booking() {
                                 <input 
                                   className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 pr-12 rounded-xl border ${errors.dropoff ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all`}
                                   placeholder="Destination"
-                                  {...register('dropoff', { required: tripType !== 'hourly' ? 'Drop-off is required' : false })}
+                                  {...register('dropoff', { required: tripType !== 'hourly' ? t('booking.dropoff') + ' is required' : false })}
                                 />
                               )}
                              <FiMapPin className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
@@ -260,23 +260,23 @@ export default function Booking() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Pickup Date</label>
+                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{t('booking.pickupDate')}</label>
                            <div className="relative">
                              <input 
                                type="date"
-                               className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.date ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all dark-calendar-inverse appearance-none`}
-                               {...register('date', { required: 'Date is required' })}
+                               className={`w-full bg-primary-dark/50 text-white/90 font-dm text-sm px-5 py-4 rounded-xl border ${errors.date ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all dark-calendar-inverse appearance-none`}
+                               {...register('date', { required: t('booking.pickupDate') + ' is required' })}
                              />
                            </div>
                            {errors.date && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.date.message as string}</p>}
                         </div>
                          <div className="space-y-2">
-                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">Pickup Time</label>
+                           <label className="font-dm text-xs font-bold text-gold/80 uppercase tracking-widest ml-1">{t('booking.pickupTime')}</label>
                            <div className="relative">
                              <input 
                                type="time"
-                               className={`w-full bg-primary-dark/50 text-white font-dm text-sm px-5 py-4 rounded-xl border ${errors.time ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all appearance-none`}
-                               {...register('time', { required: 'Time is required' })}
+                               className={`w-full bg-primary-dark/50 text-white/90 font-dm text-sm px-5 py-4 rounded-xl border ${errors.time ? 'border-red-500' : 'border-white/10'} focus:outline-none focus:border-gold/50 transition-all appearance-none`}
+                               {...register('time', { required: t('booking.pickupTime') + ' is required' })}
                              />
                            </div>
                            {errors.time && <p className="text-red-400 text-[10px] mt-1 font-bold">{errors.time.message as string}</p>}
@@ -298,13 +298,17 @@ export default function Booking() {
                           <FiCheckCircle size={24} />
                         </div>
                         <div>
-                          <h2 className="font-playfair text-2xl text-white">Vehicle Selection</h2>
-                          <p className="font-dm text-white/40 text-sm">Select the perfect ride for your party of {passengers}.</p>
+                          <h2 className="font-playfair text-2xl text-white">{t('booking.vehicleSelection')}</h2>
+                          <p className="font-dm text-white/40 text-sm">{t('booking.vehicleSubtitle').replace('{count}', passengers.toString())}</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 gap-6 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                        {fleet.filter(v => v.seating >= Number(passengers)).map((v) => (
+                        {[
+                          { id: 'escalade', name: t('data.fleet.escalade.name'), description: t('data.fleet.escalade.description'), image: '/Assets/Herosection1.jpg', category: 'suv', seating: 6, features: (t('data.fleet.escalade.features') as unknown as string[]) || [] },
+                          { id: 'mercedes', name: t('data.fleet.mercedes.name'), description: t('data.fleet.mercedes.description'), image: '/Assets/Herosection2.jpg', category: 'sedan', seating: 3, features: (t('data.fleet.mercedes.features') as unknown as string[]) || [] },
+                          { id: 'lincoln', name: t('data.fleet.lincoln.name'), description: t('data.fleet.lincoln.description'), image: '/Assets/Herosection3.jpg', category: 'stretch', seating: 10, features: (t('data.fleet.lincoln.features') as unknown as string[]) || [] }
+                        ].filter(v => v.seating >= Number(passengers)).map((v) => (
                           <label 
                             key={v.id} 
                             className={`relative flex flex-col md:flex-row items-center gap-8 p-6 rounded-2xl cursor-pointer transition-all duration-500 border overflow-hidden group ${selectedVehicleId === v.id ? 'border-gold bg-gold/[0.03] shadow-glow' : 'border-white/5 bg-primary-dark/30 hover:border-white/20'}`}
@@ -320,7 +324,7 @@ export default function Booking() {
                               <Image src={v.image} alt={v.name} fill sizes="(max-width: 768px) 100vw, 224px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
                               <div className="absolute top-2 right-2 flex gap-1">
                                 <span className="bg-primary-dark/80 backdrop-blur-md text-gold text-[8px] font-bold px-2 py-0.5 rounded-full border border-gold/30">
-                                  {v.category}
+                                  {t(`fleet.categories.${v.category}`)}
                                 </span>
                               </div>
                             </div>
@@ -328,12 +332,13 @@ export default function Booking() {
                             <div className="flex-grow text-center md:text-left">
                               <h3 className="font-playfair text-2xl text-white mb-2 group-hover:text-gold transition-colors">{v.name}</h3>
                               <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-4 text-white/40 text-xs font-dm">
-                                <span className="flex items-center gap-1.5"><FiUsers size={12} className="text-gold" /> {v.seating} Seats</span>
-                                <span className="flex items-center gap-1.5"><FiCheckCircle size={12} className="text-gold" /> Premium Leather</span>
-                                <span className="flex items-center gap-1.5"><FiCheckCircle size={12} className="text-gold" /> Climate Control</span>
+                                <span className="flex items-center gap-1.5"><FiUsers size={12} className="text-gold" /> {v.seating} {t('fleet.capacity')}</span>
+                                {v.features?.slice(0, 2).map((feat: string, fi: number) => (
+                                  <span key={fi} className="flex items-center gap-1.5"><FiCheckCircle size={12} className="text-gold" /> {feat}</span>
+                                ))}
                               </div>
                               <div className="flex items-end justify-center md:justify-start gap-2">
-                                <span className="text-gold font-bold text-2xl font-dm">{v.priceHourly}</span>
+                                <span className="text-gold font-bold text-2xl font-dm">N/A</span>
                                 <span className="text-white/20 text-[10px] uppercase font-bold mb-1.5 tracking-tighter">/ hr Base</span>
                               </div>
                             </div>
@@ -361,45 +366,45 @@ export default function Booking() {
                           <FiInfo size={24} />
                         </div>
                         <div>
-                          <h2 className="font-playfair text-2xl text-white">Passenger Details</h2>
-                          <p className="font-dm text-white/40 text-sm">Help us tailor the experience for you.</p>
+                          <h2 className="font-playfair text-2xl text-white">{t('booking.passengerDetails')}</h2>
+                          <p className="font-dm text-white/40 text-sm">{t('booking.passengerSubtitle')}</p>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <Input 
-                          label="Full Name" 
+                          label={t('booking.fullName')} 
                           required
                           placeholder="John Doe"
-                          {...register('name', { required: 'Name is required' })} 
+                          {...register('name', { required: t('booking.fullName') + ' is required' })} 
                           error={errors.name?.message as string} 
                         />
                         <Input 
-                          label="Email Address"
+                          label={t('booking.email')}
                           type="email" 
                           required
                           placeholder="john@example.com"
-                          {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' } })} 
+                          {...register('email', { required: t('booking.email') + ' is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' } })} 
                           error={errors.email?.message as string} 
                         />
                         <Input 
-                          label="Phone Number"
+                          label={t('booking.phone')}
                           type="tel" 
                           required
                           placeholder="+1 234 567 8900"
-                          {...register('phone', { required: 'Phone is required' })} 
+                          {...register('phone', { required: t('booking.phone') + ' is required' })} 
                           error={errors.phone?.message as string} 
                         />
                          <Input 
-                          label="Company Name (Optional)" 
+                          label={t('booking.company')} 
                           placeholder="Luxury Corp"
                           {...register('company')} 
                         />
                       </div>
 
                       <TextArea 
-                        label="Special Requests & Notes" 
-                        placeholder="E.g., Flight number, preferred beverages, extra baggage..."
+                        label={t('booking.requests')} 
+                        placeholder={t('booking.requestsPlaceholder')}
                         rows={4}
                         {...register('requests')} 
                       />
@@ -408,7 +413,7 @@ export default function Booking() {
                         <label className="flex gap-4 cursor-pointer group">
                            <input type="checkbox" className="w-6 h-6 bg-primary-dark border-white/10 rounded-md checked:bg-gold checked:border-gold accent-gold shrink-0 transition-all mt-0.5" {...register('terms', { required: true })} />
                            <span className="font-dm text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">
-                            I agree to the <a href="#" className="text-gold underline underline-offset-4 hover:text-gold-light">Terms of Service</a> and our <a href="#" className="text-gold underline underline-offset-4 hover:text-gold-light">Cancellation Policy</a>. I understand this is a reservation request.
+                            {t('booking.terms')}
                            </span>
                         </label>
                         {errors.terms && <p className="text-red-400 text-[10px] font-bold uppercase tracking-widest pl-10">You must agree to continue</p>}
@@ -430,28 +435,28 @@ export default function Booking() {
                           <FiCheckCircle size={24} />
                         </div>
                         <div>
-                          <h2 className="font-playfair text-2xl text-white">Final Confirmation</h2>
-                          <p className="font-dm text-white/40 text-sm">Please verify your itinerary details.</p>
+                          <h2 className="font-playfair text-2xl text-white">{t('booking.finalConfirmation')}</h2>
+                          <p className="font-dm text-white/40 text-sm">{t('booking.verifyItinerary')}</p>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-8">
                              <div>
-                               <h4 className="font-playfair text-gold text-lg mb-4 flex items-center gap-2"><FiMapPin size={16} /> Travel Info</h4>
+                               <h4 className="font-playfair text-gold text-lg mb-4 flex items-center gap-2"><FiMapPin size={16} /> {t('booking.travelInfo')}</h4>
                                <div className="space-y-4 font-dm border-l border-white/10 pl-5 ml-2">
                                   <div className="relative">
-                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Service</p>
+                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.serviceType')}</p>
                                      <p className="text-white font-semibold flex items-center gap-2">{tripType.replace(/([A-Z])/g, ' $1').toUpperCase()}</p>
                                   </div>
                                   <div>
-                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Pickup</p>
+                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.pickup')}</p>
                                      <p className="text-white text-sm leading-relaxed">{watch('pickup')}</p>
                                      <p className="text-gold/60 text-[10px] mt-1 font-bold">{watch('date')} @ {watch('time')}</p>
                                   </div>
                                   {tripType !== 'hourly' && (
                                     <div>
-                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Drop-off</p>
+                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.dropoff')}</p>
                                       <p className="text-white text-sm leading-relaxed">{watch('dropoff')}</p>
                                     </div>
                                   )}
@@ -459,20 +464,20 @@ export default function Booking() {
                              </div>
 
                              <div>
-                               <h4 className="font-playfair text-gold text-lg mb-4 flex items-center gap-2"><FiInfo size={16} /> Guest Info</h4>
+                               <h4 className="font-playfair text-gold text-lg mb-4 flex items-center gap-2"><FiInfo size={16} /> {t('booking.guestInfo')}</h4>
                                <div className="space-y-4 font-dm border-l border-white/10 pl-5 ml-2">
                                   <div className="flex gap-10">
                                     <div>
-                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Name</p>
+                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.fullName')}</p>
                                       <p className="text-white text-sm">{watch('name')}</p>
                                     </div>
                                     <div>
-                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Phone</p>
+                                      <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.phone')}</p>
                                       <p className="text-white text-sm">{watch('phone')}</p>
                                     </div>
                                   </div>
                                   <div>
-                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Email</p>
+                                     <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.email')}</p>
                                      <p className="text-white text-sm">{watch('email')}</p>
                                   </div>
                                </div>
@@ -495,7 +500,7 @@ export default function Booking() {
                                <div className="pt-6 border-t border-white/10 mt-auto">
                                   <div className="flex justify-between items-end">
                                      <div>
-                                        <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">Estimated Journey Price</p>
+                                        <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold mb-1">{t('booking.estimatedPrice')}</p>
                                         <div className="flex items-center gap-2">
                                           <span className="text-4xl text-white font-dm font-bold tracking-tighter">${estimatedPrice}</span>
                                           <span className="text-gold/60 text-xs font-bold font-dm">* EST</span>
@@ -510,8 +515,8 @@ export default function Booking() {
 
                       <div className="bg-gold/10 p-5 rounded-2xl flex gap-4 border border-gold/20 mt-6">
                          <FiInfo className="text-gold shrink-0 mt-1" size={18} />
-                         <p className="text-xs text-white/60 leading-relaxed font-dm italic">
-                           This amount is a non-binding estimate. A concierge will review your itinerary and provide a final all-inclusive quote shortly after submission.
+                         <p className="text-xs text-white/50 leading-relaxed font-dm italic">
+                           {t('booking.nonBinding')}
                          </p>
                       </div>
                     </motion.div>
@@ -538,66 +543,66 @@ export default function Booking() {
 
                       {!isConfirmed ? (
                         <>
-                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-4">Review & Confirm</h2>
+                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-4">{t('booking.reviewConfirm')}</h2>
                           <p className="font-dm text-white/50 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-                            Hi <span className="text-gold font-bold">{watch('name')}</span>, your itinerary is ready. Tap the button below to confirm your booking via WhatsApp.
+                            {t('booking.confirmedSubtitle').replace('{name}', watch('name'))}
                           </p>
                           <div className="bg-gold/5 border border-gold/20 rounded-2xl p-6 max-w-2xl mx-auto mb-10 text-left space-y-1">
-                            <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mb-4">Full Booking Summary</p>
+                            <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mb-4">{t('booking.summary')}</p>
 
                             {/* Journey Details */}
-                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-2 pb-1">Journey</p>
+                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-2 pb-1">{t('booking.steps.trip')}</p>
                             <div className="space-y-2 border-l-2 border-gold/20 pl-4">
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Service Type</span>
+                                <span className="text-white/50 shrink-0">{t('booking.serviceType')}</span>
                                 <span className="text-white font-semibold text-right capitalize">{submittedData?.tripType?.replace(/([A-Z])/g, ' $1')}</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Vehicle</span>
+                                <span className="text-white/50 shrink-0">{t('booking.steps.vehicle')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.vehicleName}</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Passengers</span>
+                                <span className="text-white/50 shrink-0">{t('booking.passengers')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.passengers} PAX</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Pickup</span>
+                                <span className="text-white/50 shrink-0">{t('booking.pickup')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.pickup}</span>
                               </div>
                               {submittedData?.dropoff && (
                                 <div className="flex justify-between text-sm font-dm gap-4">
-                                  <span className="text-white/50 shrink-0">Drop-off</span>
+                                  <span className="text-white/50 shrink-0">{t('booking.dropoff')}</span>
                                   <span className="text-white font-semibold text-right">{submittedData?.dropoff}</span>
                                 </div>
                               )}
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Date</span>
+                                <span className="text-white/50 shrink-0">{t('booking.pickupDate')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.date}</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Time</span>
+                                <span className="text-white/50 shrink-0">{t('booking.pickupTime')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.time}</span>
                               </div>
                             </div>
 
                             {/* Guest Info */}
-                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">Guest Information</p>
+                            <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">{t('booking.guestInfo')}</p>
                             <div className="space-y-2 border-l-2 border-gold/20 pl-4">
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Name</span>
+                                <span className="text-white/50 shrink-0">{t('booking.fullName')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.name}</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Email</span>
+                                <span className="text-white/50 shrink-0">{t('booking.email')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.email}</span>
                               </div>
                               <div className="flex justify-between text-sm font-dm gap-4">
-                                <span className="text-white/50 shrink-0">Phone</span>
+                                <span className="text-white/50 shrink-0">{t('booking.phone')}</span>
                                 <span className="text-white font-semibold text-right">{submittedData?.phone}</span>
                               </div>
                               {submittedData?.company && (
                                 <div className="flex justify-between text-sm font-dm gap-4">
-                                  <span className="text-white/50 shrink-0">Company</span>
+                                  <span className="text-white/50 shrink-0">{t('booking.company')}</span>
                                   <span className="text-white font-semibold text-right">{submittedData?.company}</span>
                                 </div>
                               )}
@@ -606,7 +611,7 @@ export default function Booking() {
                             {/* Special Requests */}
                             {submittedData?.requests && (
                               <>
-                                <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">Special Requests</p>
+                                <p className="text-[10px] text-gold/60 font-bold uppercase tracking-widest pt-4 pb-1">{t('booking.requests')}</p>
                                 <div className="border-l-2 border-gold/20 pl-4">
                                   <p className="text-white/70 text-sm font-dm italic leading-relaxed">{submittedData?.requests}</p>
                                 </div>
@@ -615,7 +620,7 @@ export default function Booking() {
 
                             {/* Price */}
                             <div className="flex justify-between text-sm font-dm border-t border-white/10 pt-4 mt-4 items-center">
-                              <span className="text-white/50 font-bold uppercase tracking-widest text-[10px]">Estimated Price</span>
+                              <span className="text-white/50 font-bold uppercase tracking-widest text-[10px]">{t('booking.estimatedPrice')}</span>
                               <span className="text-gold font-bold text-2xl">${submittedData?.estimatedPrice}</span>
                             </div>
                           </div>
@@ -625,18 +630,18 @@ export default function Booking() {
                               onClick={confirmBooking}
                               disabled={isConfirming}
                             >
-                              {isConfirming ? 'Sending...' : 'Confirm via WhatsApp'} <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
+                              {isConfirming ? 'Sending...' : t('booking.confirmWhatsApp')} <FiMessageCircle className="ml-2 group-hover:scale-110 transition-transform" />
                             </Button>
-                            <Button variant="secondary" onClick={() => setStep(4)} className="px-10 h-14 border-white/10">← Edit Details</Button>
+                            <Button variant="secondary" onClick={() => setStep(4)} className="px-10 h-14 border-white/10">← {t('booking.editDetails')}</Button>
                           </div>
                         </>
                       ) : (
                         <>
-                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-6">Booking Confirmed!</h2>
+                          <h2 className="font-playfair text-4xl md:text-5xl text-white mb-6">{t('booking.confirmedTitle')}</h2>
                           <p className="font-dm text-white/50 text-xl mb-12 max-w-xl mx-auto leading-relaxed">
-                            Thank you, <span className="text-gold font-bold">{watch('name')}</span>. Our elite concierge team has received your request and will be in touch shortly.
+                            {t('booking.confirmedSubtitle').replace('{name}', watch('name'))}
                           </p>
-                          <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">Explore More Vehicles</Button>
+                          <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="px-10 h-14 border-white/10">{t('booking.exploreVehicles')}</Button>
                         </>
                       )}
                     </motion.div>
@@ -680,7 +685,7 @@ export default function Booking() {
           {step < 5 && (
             <div className="space-y-6">
                <div className="bg-[#161b22]/80 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-deep">
-                  <h3 className="font-playfair text-xl text-gold mb-6 pb-4 border-b border-white/5">Reservation Summary</h3>
+                  <h3 className="font-playfair text-xl text-gold mb-6 pb-4 border-b border-white/5">{t('booking.summary')}</h3>
                   
                   <div className="space-y-6 font-dm">
                     <div className="flex items-start gap-4">
@@ -688,7 +693,7 @@ export default function Booking() {
                         <FiInfo size={16} />
                       </div>
                       <div>
-                        <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">Service</p>
+                        <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">{t('booking.serviceType')}</p>
                         <p className="text-white text-sm capitalize">{tripType.replace(/([A-Z])/g, ' $1')}</p>
                       </div>
                     </div>
@@ -699,7 +704,7 @@ export default function Booking() {
                           <FiMapPin size={16} />
                         </div>
                         <div>
-                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">From</p>
+                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">{t('booking.pickup')}</p>
                           <p className="text-white text-sm line-clamp-2">{watch('pickup')}</p>
                         </div>
                       </div>
@@ -711,7 +716,7 @@ export default function Booking() {
                           <FiCalendar size={16} />
                         </div>
                         <div>
-                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">Departure</p>
+                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">{t('booking.pickupDate')}</p>
                           <p className="text-white text-sm">{watch('date')} @ {watch('time')}</p>
                         </div>
                       </div>
@@ -723,7 +728,7 @@ export default function Booking() {
                           <FiCheckCircle size={16} />
                         </div>
                         <div className="flex-grow">
-                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">Vehicle</p>
+                          <p className="text-[10px] text-white/20 uppercase font-bold tracking-widest mb-1">{t('booking.steps.vehicle')}</p>
                           <div className="flex justify-between items-center">
                             <p className="text-white text-sm">{selectedVehicle.name}</p>
                           </div>
@@ -733,10 +738,10 @@ export default function Booking() {
 
                     {estimatedPrice > 0 && (
                       <div className="mt-8 p-6 bg-gold/5 rounded-2xl border border-gold/10">
-                        <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest mb-2">Estimated Price</p>
+                        <p className="text-[10px] text-white/30 uppercase font-bold tracking-widest mb-2">{t('booking.estimatedPrice')}</p>
                         <div className="flex items-baseline gap-1">
                           <span className="text-white text-3xl font-bold font-dm tracking-tighter">${estimatedPrice}</span>
-                          <span className="text-gold/60 text-xs font-bold">*</span>
+                          <span className="text-gold/60 text-xs font-bold font-dm">*</span>
                         </div>
                       </div>
                     )}
@@ -746,7 +751,7 @@ export default function Booking() {
                <div className="bg-gold/5 p-6 rounded-3xl border border-gold/10 text-center">
                   <FiClock className="text-gold mx-auto mb-4" size={24} />
                   <p className="text-xs text-white/60 font-dm leading-relaxed">
-                    Booking is quick & easy. Your requests are handled in real-time by our 24/7 dispatching center.
+                    {t('booking.dispatchInfo')}
                   </p>
                </div>
             </div>

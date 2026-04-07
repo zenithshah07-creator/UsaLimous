@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { services } from '@/data/mockData';
 import { Button } from '@/components/ui/Button';
 import { FiX, FiCheckCircle, FiArrowRight, FiInfo } from 'react-icons/fi';
 import { useLanguage } from '@/context/LanguageContext';
@@ -12,7 +11,15 @@ export default function Services() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { t } = useLanguage();
 
-  const openService = services.find(s => s.id === selectedService);
+  // Localized services data from translations
+  const servicesList = [
+    { id: 'airport', ...t('data.services.airport'), image: '/Assets/Corporate Travel.jpg', icon: '✈️' },
+    { id: 'wedding', ...t('data.services.wedding'), image: '/Assets/Wedding Limousine.webp', icon: '💍' },
+    { id: 'corporate', ...t('data.services.corporate'), image: '/Assets/Corporate Travel.webp', icon: '💼' },
+    { id: 'events', ...t('data.services.events'), image: '/Assets/Events & Parties.webp', icon: '🎉' }
+  ];
+
+  const openService = servicesList.find(s => s.id === selectedService);
 
   return (
     <div className="bg-primary-dark min-h-screen relative overflow-hidden">
@@ -32,7 +39,7 @@ export default function Services() {
       <section className="py-32 relative">
         <div className="container mx-auto px-4 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {services.map((service, index) => (
+            {servicesList.map((service, index) => (
               <motion.div
                 key={service.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -57,12 +64,12 @@ export default function Services() {
                   
                   {/* Content Side */}
                   <div className="w-full md:w-3/5 p-10 flex flex-col">
-                    <h2 className="font-playfair text-3xl md:text-4xl text-white mb-6 group-hover:text-gold transition-colors duration-500">{service.name}</h2>
-                    <p className="font-dm text-white/40 text-sm leading-relaxed mb-8">{service.description}</p>
+                    <h2 className="font-playfair text-3xl md:text-4xl text-white/90 mb-6 group-hover:text-gold transition-colors duration-500">{service.name}</h2>
+                    <p className="font-dm text-white/30 text-sm leading-relaxed mb-8">{service.desc}</p>
                     
                     <ul className="space-y-3 mb-10">
-                      {service.features.slice(0, 3).map((feature, i) => (
-                        <li key={i} className="flex items-center text-xs text-white/60 font-dm">
+                      {service.features?.slice(0, 3).map((feature: string, i: number) => (
+                        <li key={i} className="flex items-center text-xs text-white/50 font-dm">
                           <FiCheckCircle className="text-gold mr-3 shrink-0" size={14} />
                           {feature}
                         </li>
@@ -79,7 +86,7 @@ export default function Services() {
                       </Button>
                       <Button 
                         variant="secondary" 
-                        className="h-12 px-8 rounded-2xl border-white/5 hover:border-white/20 text-white/60 hover:text-white"
+                        className="h-12 px-8 rounded-2xl border-white/5 hover:border-white/20 text-white/50 hover:text-white/90"
                         onClick={() => setSelectedService(service.id)}
                       >
                         {t('services.learnMore')}
@@ -113,7 +120,7 @@ export default function Services() {
             >
               <button 
                 onClick={() => setSelectedService(null)}
-                className="absolute top-8 right-8 z-50 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary-dark transition-all duration-300"
+                className="absolute top-8 right-8 z-50 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/90 hover:bg-gold hover:text-primary-dark transition-all duration-300"
               >
                 <FiX size={24} />
               </button>
@@ -130,12 +137,12 @@ export default function Services() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <h3 className="font-playfair text-4xl lg:text-5xl text-white mb-4">{openService.name}</h3>
+                  <h3 className="font-playfair text-4xl lg:text-5xl text-white/90 mb-4">{openService.name}</h3>
                   <p className="text-gold font-dm font-bold mb-10 tracking-[0.2em] text-sm uppercase">{t('services.details')}</p>
                   
                   <div className="space-y-8 mb-12">
-                    <p className="text-white/50 font-dm text-lg leading-relaxed">
-                      {openService.description} Every detail is precision-engineered to provide the pinnacle of luxury transportation.
+                    <p className="text-white/40 font-dm text-lg leading-relaxed">
+                      {openService.desc}
                     </p>
                     
                     <div className="bg-white/[0.03] rounded-3xl p-8 border border-white/5">
@@ -143,8 +150,8 @@ export default function Services() {
                         <FiInfo size={20} /> {t('services.whatIncluded')}
                       </h4>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {openService.features.map((f, i) => (
-                          <li key={i} className="flex items-center text-sm text-white/70 font-dm">
+                        {openService.features?.map((f: string, i: number) => (
+                          <li key={i} className="flex items-center text-sm text-white/60 font-dm">
                             <FiCheckCircle className="text-gold mr-3 shrink-0" size={16} />
                             {f}
                           </li>
@@ -162,7 +169,7 @@ export default function Services() {
                     </Button>
                     <Button 
                       variant="secondary" 
-                      className="h-16 px-12 rounded-2xl border-white/10 hover:border-white/20 text-white/50 hover:text-white flex-1"
+                      className="h-16 px-12 rounded-2xl border-white/10 hover:border-white/20 text-white/40 hover:text-white/90 flex-1"
                       onClick={() => setSelectedService(null)}
                     >
                       {t('booking.back')}

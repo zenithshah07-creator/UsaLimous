@@ -14,11 +14,13 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const TABS = ['One Way', 'Round Trip', 'By the Hour'];
 
 const BookingWidget = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const baseInputClass = "w-full h-11 bg-[#2d333b] border border-transparent focus:border-[#d4af37]/30 rounded-xl px-4 text-white placeholder-white/30 text-xs transition-all outline-none font-dm";
+  const { t } = useLanguage();
+  const baseInputClass = "w-full h-11 bg-[#2d333b] border border-transparent focus:border-[#d4af37]/30 rounded-xl px-4 text-white/90 placeholder-white/20 text-xs transition-all outline-none font-dm";
+
+  const TABS = [t('home.tabs.oneWay'), t('home.tabs.roundTrip'), t('home.tabs.hourly')];
 
   return (
     <div className="max-w-2xl mx-auto bg-[#1b2129]/95 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-2xl border border-white/10 shadow-black/50 text-left">
@@ -30,7 +32,7 @@ const BookingWidget = () => {
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all font-dm ${
               activeTab === i
                 ? 'bg-gold text-primary-dark shadow-lg shadow-gold/20'
-                : 'text-white/60 border border-white/10 hover:border-white/30 hover:bg-white/5'
+                : 'text-white/50 border border-white/10 hover:border-white/20 hover:bg-white/5'
             }`}
           >
             {tab}
@@ -40,16 +42,16 @@ const BookingWidget = () => {
 
       {activeTab === 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-          <input className={baseInputClass} type="text" placeholder="Pickup — City, Airport, Hotel..." />
-          <input className={baseInputClass} type="text" placeholder="Drop-off Location" />
+          <input className={baseInputClass} type="text" placeholder={t('home.placeholders.pickup')} />
+          <input className={baseInputClass} type="text" placeholder={t('home.placeholders.dropoff')} />
           <input className={baseInputClass} type="date" style={{ colorScheme: 'dark' }} />
           <input className={baseInputClass} type="time" style={{ colorScheme: 'dark' }} />
           <select className={`${baseInputClass} appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Passengers</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.passengers')}</option>
             {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n} className="bg-[#2d333b] text-white">{n}</option>)}
           </select>
           <select className={`${baseInputClass} appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Vehicle Type</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.vehicle')}</option>
             <option value="Executive Sedan" className="bg-[#2d333b] text-white">Executive Sedan</option>
             <option value="Luxury SUV" className="bg-[#2d333b] text-white">Luxury SUV</option>
             <option value="Stretch Limo" className="bg-[#2d333b] text-white">Stretch Limo</option>
@@ -60,16 +62,16 @@ const BookingWidget = () => {
 
       {activeTab === 1 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-          <input className={baseInputClass} type="text" placeholder="Pickup — City, Airport, Hotel..." />
-          <input className={baseInputClass} type="text" placeholder="Drop-off Location" />
+          <input className={baseInputClass} type="text" placeholder={t('home.placeholders.pickup')} />
+          <input className={baseInputClass} type="text" placeholder={t('home.placeholders.dropoff')} />
           <input className={baseInputClass} type="text" placeholder="Departure Date" />
           <input className={baseInputClass} type="text" placeholder="Return Date" />
           <select className={`${baseInputClass} appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Passengers</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.passengers')}</option>
             {[1,2,3,4,5,6].map(n => <option key={n} value={n} className="bg-[#2d333b] text-white">{n}</option>)}
           </select>
           <select className={`${baseInputClass} appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Vehicle Type</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.vehicle')}</option>
             <option value="Executive Sedan" className="bg-[#2d333b] text-white">Executive Sedan</option>
             <option value="Luxury SUV" className="bg-[#2d333b] text-white">Luxury SUV</option>
             <option value="Stretch Limo" className="bg-[#2d333b] text-white">Stretch Limo</option>
@@ -79,15 +81,15 @@ const BookingWidget = () => {
 
       {activeTab === 2 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-          <input className={baseInputClass} type="text" placeholder="Pickup Location" />
+          <input className={baseInputClass} type="text" placeholder={t('home.placeholders.pickup')} />
           <input className={baseInputClass} type="date" style={{ colorScheme: 'dark' }} />
           <input className={baseInputClass} type="time" style={{ colorScheme: 'dark' }} />
           <select className={`${baseInputClass} appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Duration</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.duration')}</option>
             {['2 hrs','4 hrs','6 hrs','8 hrs','10 hrs','12 hrs'].map(d => <option key={d} value={d} className="bg-[#2d333b] text-white">{d}</option>)}
           </select>
           <select className={`${baseInputClass} w-full md:col-span-2 appearance-none cursor-pointer`} defaultValue="">
-            <option value="" disabled className="text-gray-400">Vehicle Type</option>
+            <option value="" disabled className="text-gray-400">{t('home.placeholders.vehicle')}</option>
             <option value="Executive Sedan" className="bg-[#2d333b] text-white">Executive Sedan</option>
             <option value="Luxury SUV" className="bg-[#2d333b] text-white">Luxury SUV</option>
             <option value="Stretch Limo" className="bg-[#2d333b] text-white">Stretch Limo</option>
@@ -95,11 +97,11 @@ const BookingWidget = () => {
         </div>
       )}
 
-      <button className="w-full h-12 bg-gold text-primary-dark font-bold rounded-xl hover:bg-gold-light transition-all transform active:scale-[0.98] shadow-lg shadow-gold/40 mt-2 flex items-center justify-center gap-2 group font-dm text-sm">
-        Search Available Rides <span className="transition-transform group-hover:translate-x-1">→</span>
+      <button className="w-full h-12 bg-gold text-primary-dark font-bold rounded-xl hover:bg-gold-light transition-all transform active:scale-[0.98] shadow-lg shadow-gold/40 mt-2 flex items-center justify-center gap-2 group font-dm text-sm" onClick={() => window.location.href='/booking'}>
+        {t('home.bookingBtn')} <span className="transition-transform group-hover:translate-x-1">→</span>
       </button>
       <p className="text-[9px] text-white/20 mt-3 font-medium tracking-wide font-dm text-center">
-        SECURE BOOKING • PROFESSIONAL CHAUFFEURS • NO HIDDEN FEES
+        {t('home.bookingNote')}
       </p>
     </div>
   );
@@ -135,7 +137,7 @@ const StatCounter = ({ target, suffix, label }: { target: number, suffix: string
   return (
     <div className="text-center" ref={ref}>
       <div className="text-2xl font-bold text-gold mb-1 font-dm">{value}</div>
-      <div className="text-[10px] uppercase tracking-widest text-white/40 font-semibold font-dm">{label}</div>
+      <div className="text-[10px] uppercase tracking-widest text-white/30 font-semibold font-dm">{label}</div>
     </div>
   );
 };
@@ -211,7 +213,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.7 }}
-            className="font-playfair text-[40px] sm:text-[52px] md:text-[68px] lg:text-[76px] font-bold text-white leading-[1.08] tracking-tight mx-auto"
+            className="font-playfair text-[40px] sm:text-[52px] md:text-[68px] lg:text-[76px] font-bold text-white/90 leading-[1.08] tracking-tight mx-auto"
           >
             {(() => {
               const title = t('hero.title');
@@ -227,7 +229,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.7 }}
-            className="font-dm text-[15px] md:text-[17px] text-white/75 mt-7 max-w-xl mx-auto leading-relaxed"
+            className="font-dm text-[15px] md:text-[17px] text-white/65 mt-7 max-w-xl mx-auto leading-relaxed"
           >
             {t('hero.subtitle')}
           </motion.p>
@@ -247,7 +249,7 @@ export default function Home() {
             </Button>
             <Button 
               variant="secondary"
-              className="!rounded-full !px-12 !h-14 font-bold backdrop-blur-sm text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 !border-white/30 !text-white hover:!bg-white/10"
+              className="!rounded-full !px-12 !h-14 font-bold backdrop-blur-sm text-[15px] tracking-wide transform hover:scale-[1.03] active:scale-95 duration-200 !border-white/20 !text-white/90 hover:!bg-white/10"
               onClick={() => window.location.href='/fleet'}
             >
               {t('hero.viewFleet')}
@@ -256,10 +258,10 @@ export default function Home() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-x-4 gap-y-10 md:gap-16 mt-14 lg:mt-20 mx-auto max-w-sm md:max-w-none">
-            <StatCounter target={500} suffix="+" label="Happy Clients" />
-            <StatCounter target={50} suffix="+" label="Cities Covered" />
-            <StatCounter target={10} suffix="+" label="Years Experience" />
-            <StatCounter target={49} suffix="★" label="Rating" />
+            <StatCounter target={500} suffix="+" label={t('home.stats.clients')} />
+            <StatCounter target={50} suffix="+" label={t('home.stats.cities')} />
+            <StatCounter target={10} suffix="+" label={t('home.stats.experience')} />
+            <StatCounter target={49} suffix="★" label={t('home.stats.rating')} />
           </div>
 
           <div className="mt-14 hidden lg:block">
@@ -278,8 +280,8 @@ export default function Home() {
             variants={staggerContainer}
             className="text-center mb-20"
           >
-            <motion.h2 variants={itemFadeUp} className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">Our Premium Services</motion.h2>
-            <motion.p variants={itemFadeUp} className="font-dm text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">Tailored transportation solutions designed to meet the highest standards of luxury and reliability.</motion.p>
+            <motion.h2 variants={itemFadeUp} className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">{t('services.title')}</motion.h2>
+            <motion.p variants={itemFadeUp} className="font-dm text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">{t('services.subtitle')}</motion.p>
           </motion.div>
 
           <motion.div 
@@ -293,10 +295,10 @@ export default function Home() {
               <motion.div key={service.id} variants={itemFadeUp}>
                 <Card variant="gold-accent-left" className="h-full flex flex-col group cursor-pointer p-8" hoverEffect>
                   <div className="text-4xl text-gold mb-6 group-hover:scale-110 transition-transform duration-300 transform-gpu">{service.icon}</div>
-                  <h3 className="font-playfair text-2xl font-semibold text-white mb-4 group-hover:text-gold transition-colors">{service.name}</h3>
-                  <p className="font-dm text-white/50 text-sm leading-relaxed mb-8 flex-grow">{service.description}</p>
+                  <h3 className="font-playfair text-2xl font-semibold text-white/90 mb-4 group-hover:text-gold transition-colors">{service.name}</h3>
+                  <p className="font-dm text-white/40 text-sm leading-relaxed mb-8 flex-grow">{service.description}</p>
                   <Link href={`/services#${service.id}`} className="font-dm text-gold font-semibold text-sm group-hover:text-gold-light transition-colors inline-block relative overflow-hidden w-max">
-                    Learn More &rarr;
+                    {t('services.learnMore')} &rarr;
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-gold-light -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300"></span>
                   </Link>
                 </Card>
@@ -324,7 +326,7 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="font-dm text-white/60 max-w-2xl mx-auto text-lg"
+              className="font-dm text-white/50 max-w-2xl mx-auto text-lg"
             >
               {t('whyChooseUs.subtitle')}
             </motion.p>
@@ -348,8 +350,8 @@ export default function Home() {
                 <div className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500 bg-gold/10 w-16 h-16 flex items-center justify-center rounded-full">
                   {item.icon}
                 </div>
-                <h3 className="font-playfair text-2xl text-white mb-4 group-hover:text-gold transition-colors">{item.title}</h3>
-                <p className="font-dm text-white/50 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="font-playfair text-2xl text-white/90 mb-4 group-hover:text-gold transition-colors">{item.title}</h3>
+                <p className="font-dm text-white/40 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -369,7 +371,7 @@ export default function Home() {
               <p className="font-dm text-gray-400 text-lg">{t('fleet.subtitle')}</p>
             </motion.div>
             <Link href="/fleet" className="hidden md:inline-block text-gold hover:text-gold-light font-dm font-semibold transition-colors border-b border-gold-light pb-1 text-lg">
-              View All Vehicles
+              {t('hero.viewFleet')}
             </Link>
           </div>
           
@@ -411,8 +413,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="p-8 flex-grow flex flex-col">
-                      <h3 className="font-playfair text-2xl font-bold text-white mb-2 group-hover:text-gold transition-colors">{vehicle.name}</h3>
-                      <div className="flex items-center gap-4 text-white/50 text-sm mb-6 font-dm">
+                      <h3 className="font-playfair text-2xl font-bold text-white/90 mb-2 group-hover:text-gold transition-colors">{vehicle.name}</h3>
+                      <div className="flex items-center gap-4 text-white/40 text-sm mb-6 font-dm">
                         <span className="flex items-center gap-1.5"><FiUsers className="text-gold" /> {vehicle.seating} Guests</span>
                       </div>
                       <p className="text-white/40 text-sm mb-8 font-dm leading-relaxed">
@@ -420,7 +422,7 @@ export default function Home() {
                       </p>
                       <div className="flex items-center justify-between mt-auto border-t border-white/5 pt-6">
                         <div>
-                          <p className="text-[10px] text-white/30 uppercase tracking-widest font-bold mb-1">{t('fleet.price')}</p>
+                          <p className="text-[10px] text-white/20 uppercase tracking-widest font-bold mb-1">{t('fleet.price')}</p>
                           <span className="font-dm text-xl text-gold font-bold">{vehicle.priceHourly}</span>
                         </div>
                         <Button variant="primary" className="!py-2.5 !px-6 text-sm shadow-glow" onClick={() => window.location.href=`/booking?vehicle=${vehicle.id}`}>
@@ -434,7 +436,7 @@ export default function Home() {
             </Swiper>
           </motion.div>
           <div className="text-center mt-10 md:hidden">
-            <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="w-full h-14">View All Vehicles</Button>
+            <Button variant="secondary" onClick={() => window.location.href='/fleet'} className="w-full h-14">{t('hero.viewFleet')}</Button>
           </div>
         </div>
       </section>
@@ -449,7 +451,7 @@ export default function Home() {
             className="mb-20"
           >
             <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-gold mb-6">Client Testimonials</h2>
-            <p className="font-dm text-white/60 text-lg max-w-2xl mx-auto">Don&apos;t just take our word for it—hear from our esteemed clientele.</p>
+            <p className="font-dm text-white/50 text-lg max-w-2xl mx-auto">Don&apos;t just take our word for it—hear from our esteemed clientele.</p>
           </motion.div>
 
           <Swiper
@@ -470,13 +472,13 @@ export default function Home() {
                   <div className="flex text-gold mb-8">
                     {[1,2,3,4,5].map((star) => <FiStar key={star} fill="currentColor" /> )}
                   </div>
-                  <p className="font-dm italic text-white/90 text-lg leading-relaxed mb-10">&quot;{t.text}&quot;</p>
+                  <p className="font-dm italic text-white/80 text-lg leading-relaxed mb-10">&quot;{t.text}&quot;</p>
                   <div className="flex items-center gap-5 mt-auto">
                     <div className="relative w-14 h-14 shrink-0">
                       <Image src={t.image} alt={t.name} fill sizes="56px" className="rounded-full border-2 border-gold/20 p-0.5 object-cover" />
                     </div>
                     <div>
-                      <h4 className="font-playfair text-xl font-bold text-white">{t.name}</h4>
+                      <h4 className="font-playfair text-xl font-bold text-white/90">{t.name}</h4>
                       <p className="font-dm text-xs text-gold/60 uppercase tracking-widest">{t.title}</p>
                     </div>
                   </div>
@@ -489,24 +491,25 @@ export default function Home() {
 
       {/* 6. CTA SECTION */}
       <section className="py-40 relative overflow-hidden bg-primary-dark border-y border-gold/10">
-        <div className="absolute inset-0 z-0 opacity-5" style={{ backgroundImage: "url('/Assets/Herosection2.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed' }}></div>
+        <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: "url('/Assets/Herosection2.jpg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-dark via-transparent to-primary-dark z-0"></div>
         <div className="container relative z-10 mx-auto px-4 text-center flex flex-col items-center">
           <motion.h2 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="font-playfair text-4xl md:text-6xl text-gold mb-8"
+            className="font-playfair text-4xl md:text-6xl text-gold mb-8 drop-shadow-lg"
           >
-            Ready to Experience Luxury?
+            {t('home.cta.title')}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-dm text-xl text-white/70 mb-12 max-w-2xl"
+            className="font-dm text-lg md:text-xl text-white/80 mb-12 max-w-2xl"
           >
-            Book your limo in 3 easy steps and elevate your journey.
+            {t('home.cta.subtitle')}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -515,9 +518,9 @@ export default function Home() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-8 items-center"
           >
-            <Button className="!px-16 !py-6 text-xl shadow-glow" onClick={() => window.location.href='/booking'}>Book Now</Button>
-            <div className="text-white/40 font-dm text-lg">
-              or <a href="tel:+18005550199" className="text-gold font-bold hover:underline ml-2 transition-all">+1 800-555-0199</a>
+            <Button className="!px-16 !py-6 text-xl shadow-[0_0_30px_rgba(212,175,55,0.3)] !rounded-lg" onClick={() => window.location.href='/booking'}>{t('nav.bookNow')}</Button>
+            <div className="text-white/60 font-dm text-lg flex items-center gap-3">
+              {t('home.cta.or')} <a href="tel:+18005550199" className="text-gold font-bold hover:text-gold-light transition-all text-xl md:text-2xl tracking-tight">+1 800-555-0199</a>
             </div>
           </motion.div>
         </div>

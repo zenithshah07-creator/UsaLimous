@@ -53,13 +53,13 @@ export default function BlogListing() {
                       </h2>
                       
                       {/* Meta */}
-                      <div className="flex flex-wrap gap-4 text-xs font-dm text-gray-500 mb-4">
+                      <div className="flex flex-wrap gap-4 text-xs font-dm text-white/30 mb-4">
                         <span className="flex items-center"><FiUser className="mr-2" />{post.author}</span>
                         <span className="flex items-center"><FiCalendar className="mr-2" />{post.date}</span>
                         <span className="flex items-center"><FiClock className="mr-2" />{post.readTime} min read</span>
                       </div>
 
-                      <p className="font-dm text-white/70 text-sm mb-6 flex-grow">{post.excerpt}</p>
+                      <p className="font-dm text-white/60 text-sm mb-6 flex-grow">{post.excerpt}</p>
                       
                       <Link href={`/blog/${post.slug}`} className="font-dm text-gold font-semibold text-sm hover:text-gold-light mt-auto inline-flex items-center">
                         Read More 
@@ -85,7 +85,7 @@ export default function BlogListing() {
               <div className="bg-gray-charcoal p-8 rounded-lg border border-gray-dark shadow-light">
                 <h3 className="font-playfair text-xl text-gold mb-6 border-b border-gray-dark pb-3">Search</h3>
                 <div className="flex bg-primary-dark rounded border border-gray-dark focus-within:border-gold overflow-hidden transition-colors">
-                  <input type="text" placeholder="Search articles..." className="bg-transparent text-white font-dm px-4 py-3 w-full outline-none text-sm" />
+                  <input type="text" placeholder="Search articles..." className="bg-transparent text-white/90 font-dm px-4 py-3 w-full outline-none text-sm placeholder:text-white/20" />
                   <button className="bg-gold text-primary-dark px-4 hover:bg-gold-light font-dm font-bold text-sm transition-colors">Go</button>
                 </div>
               </div>
@@ -96,8 +96,8 @@ export default function BlogListing() {
                 <ul className="space-y-3">
                   {categories.map((cat) => (
                     <li key={cat}>
-                      <Link href="#" className="font-dm text-white/70 hover:text-gold text-sm flex items-center group transition-colors">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover:bg-gold mr-3 transition-colors"></span>
+                      <Link href="#" className="font-dm text-white/60 hover:text-gold text-sm flex items-center group transition-colors">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-gold mr-3 transition-colors"></span>
                         {cat}
                       </Link>
                     </li>
@@ -115,8 +115,8 @@ export default function BlogListing() {
                         <Image src={post.image} alt={post.title} fill sizes="64px" className="object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <div className="flex flex-col justify-center">
-                         <h4 className="font-cormorant text-white group-hover:text-gold transition-colors line-clamp-2 leading-tight mb-1">{post.title}</h4>
-                         <span className="font-dm text-gray-500 text-xs">{post.date}</span>
+                         <h4 className="font-cormorant text-white/80 group-hover:text-gold transition-colors line-clamp-2 leading-tight mb-1">{post.title}</h4>
+                         <span className="font-dm text-white/30 text-xs">{post.date}</span>
                       </div>
                     </div>
                   ))}

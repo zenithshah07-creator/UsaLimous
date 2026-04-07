@@ -7,8 +7,8 @@ export async function POST(req: Request) {
     
     // 1. Send Email Notification to Owner
     const mailOptions = {
-      from: process.env.GMAIL_USER || 'amarrauniyarusa@gmail.com',
-      to: 'amarrauniyarusa@gmail.com',
+      from: process.env.GMAIL_USER || 'usalimosservice@gmail.com',
+      to: process.env.GMAIL_USER || 'usalimosservice@gmail.com',
       subject: `✦ NEW BOOKING: ${data.name} ✦`,
       html: getBookingEmailTemplate(data),
     };

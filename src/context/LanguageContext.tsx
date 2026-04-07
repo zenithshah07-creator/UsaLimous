@@ -24,19 +24,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('locale', newLocale);
   };
 
-  const t = (path: string): string => {
+  const t = (path: string): string | any => {
     const keys = path.split('.');
-    let result: any = translations[locale];
+    let result: unknown = translations[locale];
     
     for (const key of keys) {
-      if (result && typeof result === 'object' && key in result) {
+      if (result && typeof result === 'object' && key in (result as Record<string, unknown>)) {
         result = (result as Record<string, unknown>)[key];
       } else {
         return path;
       }
     }
     
-    return typeof result === 'string' ? result : path;
+    return (result !== undefined) ? result : path;
   };
 
   return (

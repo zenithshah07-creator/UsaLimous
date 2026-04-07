@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface PageHeroProps {
   badge?: string;
@@ -15,9 +16,12 @@ export default function PageHero({ badge, title, subtitle, image, breadcrumb, ch
   return (
     <section className="relative h-[420px] md:h-[480px] flex items-center justify-center overflow-hidden">
       {/* Background image */}
-      <img
+      <Image
         src={image}
         alt={title}
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 w-full h-full object-cover object-center scale-105"
         style={{ filter: 'brightness(0.45)' }}
       />
@@ -45,7 +49,7 @@ export default function PageHero({ badge, title, subtitle, image, breadcrumb, ch
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.65 }}
-          className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4"
+          className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white/90 leading-tight mb-4"
         >
           {title}
         </motion.h1>
@@ -55,7 +59,7 @@ export default function PageHero({ badge, title, subtitle, image, breadcrumb, ch
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-dm text-white/70 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+            className="font-dm text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
           >
             {subtitle}
           </motion.p>
@@ -66,7 +70,7 @@ export default function PageHero({ badge, title, subtitle, image, breadcrumb, ch
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="font-dm text-white/40 text-xs uppercase tracking-widest mt-5"
+            className="font-dm text-white/30 text-xs uppercase tracking-widest mt-5"
           >
             {breadcrumb}
           </motion.p>
